@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Fanti-3
+    uniqueID: 3521191425
+    locked: 0
+  - name: Fanti-2
+    uniqueID: 1441213725
+    locked: 0
+  - name: Fanti-1
+    uniqueID: 946940019
+    locked: 0
+  - name: Fanti
+    uniqueID: 2031260517
+    locked: 0
+  - name: Fanti+1
+    uniqueID: 2502307189
+    locked: 0
+  - name: Fanti+2
+    uniqueID: 505102939
+    locked: 0
+  - name: UI
+    uniqueID: 551696661
+    locked: 0
+  m_RenderingLayers:
+  - Default
