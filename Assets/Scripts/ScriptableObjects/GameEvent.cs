@@ -6,10 +6,12 @@ public class GameEvent : ScriptableObject
 {
     [SerializeField] List<GameEventListener> listeners = new();
 
-    public void Raise() 
+    public void Raise(GameObject source) 
     {
+        if (!source) Debug.LogWarning("GameEvent.source not set");
+
         foreach (GameEventListener listener in listeners) 
-            listener.OnEvenRaised();
+            listener.OnEventRaised(source);
     }
 
     public void RegisterListener(GameEventListener listener)

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneController : MonoBehaviour
+public class SceneChangeManager : MonoBehaviour
 {
     string _currentContentScene = "";
 

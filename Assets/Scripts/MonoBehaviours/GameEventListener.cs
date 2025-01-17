@@ -7,6 +7,8 @@ public class GameEventListener : MonoBehaviour
     [SerializeField] GameEvent _gameEvent;
     [SerializeField] UnityEvent _response;
 
+    GameObject _eventSource;
+
     void OnEnable() 
     {
         _gameEvent.RegisterListener(this);
@@ -17,8 +19,9 @@ public class GameEventListener : MonoBehaviour
         _gameEvent.UnregisterListener(this);
     }
 
-    public void OnEvenRaised() 
+    public void OnEventRaised(GameObject source)
     {
+        _eventSource = source;
         _response.Invoke();
     }
 }

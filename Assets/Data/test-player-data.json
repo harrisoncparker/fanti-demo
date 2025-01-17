@@ -1,0 +1,52 @@
+{
+    "username": "harrisoncparker",
+    "fanties": [
+        {
+            "name": "Fantellita",
+            "color": "pink",
+            "decks": [1],
+            "last_play_session": "2024-12-04",
+            "head_wearable": 1,
+            "last_wearable_update": "2024-12-10",
+            "level": 1,
+            "steak": 3,
+            "exp" : 130
+        }
+    ],
+    "decks": [
+        {
+            "id": 1,
+            "title": "Spanish Revision",
+            "cards": [
+                {
+                    "front" : "tree",
+                    "back" : "árbol",
+                    "double_sided" : true
+                },
+                {
+                    "front" : "game",
+                    "back" : "juego",
+                    "double_sided" : true
+                },
+                {
+                    "front" : "computer",
+                    "back" : "computadora",
+                    "double_sided" : true
+                },
+                {
+                    "front" : "river",
+                    "back" : "río",
+                    "double_sided" : true
+                }
+            ]
+        }
+    ],
+    "wearables": [
+        {
+            "id": 1,
+            "location": "head",
+            "name": "Wizard Hat",
+            "sprite_path": "/Art/Wearables/Hats/wizard_hat.aseprite"
+        }
+    ]
+}

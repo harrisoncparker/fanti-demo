@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class ExploresEnvironment : MonoBehaviour
+public class FantiHomeAI : MonoBehaviour
 {
     [SerializeField] Animator _animator;
     

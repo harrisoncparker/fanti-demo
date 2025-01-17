@@ -56,10 +56,13 @@ TagManager:
   - name: Fanti+1
     uniqueID: 2502307189
     locked: 0
-  - name: Fanti+2
+  - name: Overlay Background
     uniqueID: 505102939
     locked: 0
-  - name: UI
+  - name: Overlay Foreground
+    uniqueID: 2463146297
+    locked: 0
+  - name: Menu
     uniqueID: 551696661
     locked: 0
   m_RenderingLayers:
