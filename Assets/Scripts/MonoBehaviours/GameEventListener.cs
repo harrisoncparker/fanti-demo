@@ -7,7 +7,7 @@ public class GameEventListener : MonoBehaviour
     [SerializeField] GameEvent _gameEvent;
     [SerializeField] UnityEvent _response;
 
-    GameObject _eventSource;
+    public GameObject _eventSource;
 
     void OnEnable() 
     {
