@@ -58,6 +58,12 @@ public class SaveDataManager : MonoBehaviour
         FantiModel fantalita = new("Fantalita");
         FantiModel hugo = new("Hugo", ColourName.Blue);
 
+        fantalita.level = 2;
+        fantalita.exp = 120;
+
+        hugo.streak = 4;
+        hugo.exp = 40;
+
         PlayerModel testPlayer = new(
             "Harrison",
             "test@gmail.com",

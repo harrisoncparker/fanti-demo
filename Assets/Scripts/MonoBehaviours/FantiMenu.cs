@@ -3,17 +3,39 @@ using UnityEngine;
 
 public class FantiMenu : MonoBehaviour
 {
-    [SerializeField] TMP_Text _fantiNameText;
+    [Header("Text Displays")]
+    [SerializeField] TextDisplay _fantiNameText;
+    [SerializeField] TextDisplay _levelTextDisplay;
+    [SerializeField] TextDisplay _streakTextDisplay;
+    [SerializeField] TextDisplay _expTextDisplay;
 
-    public void LoadSelectedFanti()
+    [Header("Events")]
+    [SerializeField] GameEvent _fantiMenuLoadedEvent;
+
+    public void Load()
     {
         StartCoroutine(Utilities.WaitForAFrameThen(() => {
-            UpdateText(GameStateManager.Instance.SelectedFanti);
+            LoadFanti();
+        }));
+    }
+
+    void LoadFanti()
+    {
+        UpdateText(GameStateManager.Instance.SelectedFanti);
+
+        // @TODO Currently just waiting a frame to insure everythings 
+        // loaded before displaying the fanti menu. Eventually this should 
+        // be a more robust loading buffer.
+        StartCoroutine(Utilities.WaitForAFrameThen(() => { 
+            _fantiMenuLoadedEvent.Raise(gameObject);
         }));
     }
 
     void UpdateText(Fanti fanti)
     {
-        _fantiNameText.SetText(fanti.Model.name);
+        _fantiNameText.UpdateText(fanti.Model.name);
+        _levelTextDisplay.UpdateText(fanti.Model.level.ToString());
+        _streakTextDisplay.UpdateText(fanti.Model.streak.ToString());
+        _expTextDisplay.UpdateText(fanti.Model.exp.ToString());
     }
 }

@@ -48,8 +48,6 @@ public class FantiModel : Model
 
     public new string ToJson(bool prettyPrint = false)
     {
-
-        
         return JsonUtility.ToJson(this, prettyPrint);
     }
 }

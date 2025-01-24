@@ -6,8 +6,8 @@
             "name": "Fantalita",
             "colour": 0,
             "decks": [],
-            "level": 1,
-            "exp": 0,
+            "level": 2,
+            "exp": 120,
             "streak": 0,
             "headWearableID": 0,
             "faceWearableID": 0
@@ -17,8 +17,8 @@
             "colour": 1,
             "decks": [],
             "level": 1,
-            "exp": 0,
-            "streak": 0,
+            "exp": 40,
+            "streak": 4,
             "headWearableID": 0,
             "faceWearableID": 0
         }
