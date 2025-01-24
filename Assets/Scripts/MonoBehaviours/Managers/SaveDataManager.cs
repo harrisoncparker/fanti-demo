@@ -32,7 +32,7 @@ public class SaveDataManager : MonoBehaviour
     {
         // Test data
         if (_useTestData) {
-            Instance.CurrentPlayerModel = GetTestPlayerModel();
+            Instance.CurrentPlayerModel = PlayerModel.Fake();
             SaveData();
         }
 
@@ -51,29 +51,6 @@ public class SaveDataManager : MonoBehaviour
         // Load locally first
         Instance.CurrentPlayerModel = LocalSaveSystem.LoadData();
         Instance._saveDataLoadedEvent.Raise(gameObject);
-    }
-
-    PlayerModel GetTestPlayerModel()
-    {
-        FantiModel fantalita = new("Fantalita");
-        FantiModel hugo = new("Hugo", ColourName.Blue);
-
-        fantalita.level = 2;
-        fantalita.exp = 120;
-
-        hugo.streak = 4;
-        hugo.exp = 40;
-
-        PlayerModel testPlayer = new(
-            "Harrison",
-            "test@gmail.com",
-            new List<FantiModel> { 
-                fantalita, 
-                hugo
-            }
-        );
-
-        return testPlayer;
     }
 }
 
