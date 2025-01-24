@@ -1,6 +1,4 @@
-using System;
 using System.IO;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SaveDataManager : MonoBehaviour
@@ -42,13 +40,11 @@ public class SaveDataManager : MonoBehaviour
 
     public void SaveData()
     {
-        // Save locally
         LocalSaveSystem.SaveData(Instance.CurrentPlayerModel, _useTestData);
     }
 
     public void LoadData()
     {
-        // Load locally first
         Instance.CurrentPlayerModel = LocalSaveSystem.LoadData();
         Instance._saveDataLoadedEvent.Raise(gameObject);
     }

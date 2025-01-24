@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class FantiModel : Model
@@ -13,13 +12,24 @@ public class FantiModel : Model
     public int exp;
     public int streak;
 
-    // Timestamps
-    public DateTime lastPlaySession;
-    public DateTime  lastWearableUpdate;
-
-    // Wearables
+    // Wearable IDs
     public int headWearableID;
     public int faceWearableID;
+
+    // Timestamps
+    public string lastPlaySessionSerialized;
+    public DateTime LastPlaySession
+    {
+        get => DeserializeDateTime(lastPlaySessionSerialized);
+        set => lastPlaySessionSerialized = value.ToString("o");
+    }
+
+    public string lastWearableUpdateSerialized;
+    public DateTime LastWearableUpdate
+    {
+        get => DeserializeDateTime(lastWearableUpdateSerialized);
+        set => lastWearableUpdateSerialized = value.ToString("o");
+    }
 
     public FantiModel(
         string name,
@@ -28,10 +38,10 @@ public class FantiModel : Model
         int level = 1,
         int exp = 0,
         int streak = 0,
-        DateTime? lastPlaySession = null,
-        DateTime? lastWearableUpdate = null,
         int headWearableID = 0,
-        int faceWearableID = 0
+        int faceWearableID = 0,
+        DateTime? lastPlaySession = null,
+        DateTime? lastWearableUpdate = null
     )
     {
         this.name = name;
@@ -40,14 +50,10 @@ public class FantiModel : Model
         this.level = level;
         this.exp = exp;
         this.streak = streak;
-        this.lastPlaySession = lastPlaySession ?? DateTime.Now;
-        this.lastWearableUpdate = lastWearableUpdate ?? DateTime.Now;
         this.headWearableID = headWearableID;
         this.faceWearableID = faceWearableID;
-    }
 
-    public new string ToJson(bool prettyPrint = false)
-    {
-        return JsonUtility.ToJson(this, prettyPrint);
+        LastPlaySession = lastPlaySession ?? DateTime.Now;
+        LastWearableUpdate = lastWearableUpdate ?? DateTime.Now;
     }
 }

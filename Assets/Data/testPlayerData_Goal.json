@@ -1,16 +1,30 @@
 {
-    "username": "harrisoncparker",
-    "fanties": [
+    "userName": "Harrison",
+    "email": "test@gmail.com",
+    "fantis": [
         {
-            "name": "Fantellita",
-            "color": "pink",
+            "name": "Fantalita",
+            "colour": 0,
             "decks": [1],
-            "last_play_session": "2024-12-04",
-            "head_wearable": 1,
-            "last_wearable_update": "2024-12-10",
+            "level": 2,
+            "exp": 120,
+            "streak": 0,
+            "headWearableID": 1,
+            "faceWearableID": 0,
+            "lastPlaySessionSerialized": "2025-01-24T16:42:01.1857600+00:00",
+            "lastWearableUpdateSerialized": "2025-01-24T16:42:01.1875530+00:00"
+        },
+        {
+            "name": "Hugo",
+            "colour": 1,
+            "decks": [1],
             "level": 1,
-            "steak": 3,
-            "exp" : 130
+            "exp": 40,
+            "streak": 4,
+            "headWearableID": 1,
+            "faceWearableID": 0,
+            "lastPlaySessionSerialized": "2025-01-24T16:42:01.1876310+00:00",
+            "lastWearableUpdateSerialized": "2025-01-24T16:42:01.1876710+00:00"
         }
     ],
     "decks": [
