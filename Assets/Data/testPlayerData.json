@@ -1,0 +1,26 @@
+{
+    "userName": "Harrison",
+    "email": "test@gmail.com",
+    "fantis": [
+        {
+            "name": "Fantalita",
+            "colour": 0,
+            "decks": [],
+            "level": 1,
+            "exp": 0,
+            "streak": 0,
+            "headWearableID": 0,
+            "faceWearableID": 0
+        },
+        {
+            "name": "Hugo",
+            "colour": 1,
+            "decks": [],
+            "level": 1,
+            "exp": 0,
+            "streak": 0,
+            "headWearableID": 0,
+            "faceWearableID": 0
+        }
+    ]
+}

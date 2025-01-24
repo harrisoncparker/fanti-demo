@@ -8,13 +8,12 @@ public class FantiMenu : MonoBehaviour
     public void LoadSelectedFanti()
     {
         StartCoroutine(Utilities.WaitForAFrameThen(() => {
-            Debug.Log("LoadSelectedFanti: " + GameStateManager.Instance.SelectedFanti._name);
             UpdateText(GameStateManager.Instance.SelectedFanti);
         }));
     }
 
-    void UpdateText(FantiModel fanti)
+    void UpdateText(Fanti fanti)
     {
-        _fantiNameText.SetText(fanti._name);
+        _fantiNameText.SetText(fanti.Model.name);
     }
 }

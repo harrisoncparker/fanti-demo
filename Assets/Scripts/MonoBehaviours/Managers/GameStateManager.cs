@@ -17,7 +17,7 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
-    public FantiModel SelectedFanti { get; set; }
+    public Fanti SelectedFanti { get; set; }
 
     public void ResetGame()
     {
