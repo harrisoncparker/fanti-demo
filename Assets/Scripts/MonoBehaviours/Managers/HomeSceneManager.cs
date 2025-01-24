@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class HomeSceneManager : MonoBehaviour
 {
+    bool fantisLoaded = false;
+
     [SerializeField] Fanti _fantiPrefab;
     [SerializeField] HomeSpawnPoint[] _spawnPoints;
+
+    void Start()
+    {
+        if (!fantisLoaded) LoadFantis();
+    }
 
     public void LoadFantis()
     {
@@ -40,5 +47,7 @@ public class HomeSceneManager : MonoBehaviour
 
             newFanti.transform.SetParent(spawnPoint.transform);
         }
+
+        fantisLoaded = true;
     }
 }

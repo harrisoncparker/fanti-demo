@@ -7,7 +7,7 @@ public class FantiModel : Model
     // General
     public string name;
     public ColourName colour;
-    public List<DeckModel> decks;
+    public List<string> deckIds;
     public int level;
     public int exp;
     public int streak;
@@ -34,7 +34,7 @@ public class FantiModel : Model
     public FantiModel(
         string name,
         ColourName colour = ColourName.Pink,
-        List<DeckModel> decks = null,
+        List<string> deckIds = null,
         int level = 1,
         int exp = 0,
         int streak = 0,
@@ -46,7 +46,7 @@ public class FantiModel : Model
     {
         this.name = name;
         this.colour = colour;
-        this.decks = decks ?? new List<DeckModel>();
+        this.deckIds = deckIds ?? new List<string>();
         this.level = level;
         this.exp = exp;
         this.streak = streak;
