@@ -1,5 +1,4 @@
-using System;
-using Unity.VisualScripting;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Fanti : MonoBehaviour
@@ -23,5 +22,18 @@ public class Fanti : MonoBehaviour
         if (this != eventSource.GetComponent<Fanti>()) return;
 
         GameStateManager.Instance.SelectedFanti = this;
+
+        SelectDeck();
+    }
+
+    public void SelectDeck(int deckIndex = 0) 
+    {
+        List<DeckModel> decks = Model.GetDecks();
+
+        if(decks.Count < 1) {
+            Debug.LogWarning(Model.name + " doeans't have any decks to load into the GameStateManager");
+        } else {
+            GameStateManager.Instance.SelectedDeckModel = decks[deckIndex];
+        }
     }
 }

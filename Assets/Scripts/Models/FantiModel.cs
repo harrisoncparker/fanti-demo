@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 
-[Serializable]
+[System.Serializable]
 public class FantiModel : Model
 {
     // General
@@ -18,14 +17,14 @@ public class FantiModel : Model
 
     // Timestamps
     public string lastPlaySessionSerialized;
-    public DateTime LastPlaySession
+    public System.DateTime LastPlaySession
     {
         get => DeserializeDateTime(lastPlaySessionSerialized);
         set => lastPlaySessionSerialized = value.ToString("o");
     }
 
     public string lastWearableUpdateSerialized;
-    public DateTime LastWearableUpdate
+    public System.DateTime LastWearableUpdate
     {
         get => DeserializeDateTime(lastWearableUpdateSerialized);
         set => lastWearableUpdateSerialized = value.ToString("o");
@@ -40,8 +39,8 @@ public class FantiModel : Model
         int streak = 0,
         int headWearableID = 0,
         int faceWearableID = 0,
-        DateTime? lastPlaySession = null,
-        DateTime? lastWearableUpdate = null
+        System.DateTime? lastPlaySession = null,
+        System.DateTime? lastWearableUpdate = null
     )
     {
         this.name = name;
@@ -53,7 +52,22 @@ public class FantiModel : Model
         this.headWearableID = headWearableID;
         this.faceWearableID = faceWearableID;
 
-        LastPlaySession = lastPlaySession ?? DateTime.Now;
-        LastWearableUpdate = lastWearableUpdate ?? DateTime.Now;
+        LastPlaySession = lastPlaySession ?? System.DateTime.Now;
+        LastWearableUpdate = lastWearableUpdate ?? System.DateTime.Now;
+    }
+
+    public List<DeckModel> GetDecks() {
+        List<DeckModel> decks = new();
+
+        deckIds.ForEach(deckID => {
+            SaveDataManager.Instance.CurrentPlayerModel.decks.ForEach(deck => {
+
+                if (deck.id == deckID) {
+                    decks.Add(deck);
+                }
+            });
+        });
+
+        return decks;
     }
 }

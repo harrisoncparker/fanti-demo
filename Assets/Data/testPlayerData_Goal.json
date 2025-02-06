@@ -5,7 +5,7 @@
         {
             "name": "Fantalita",
             "colour": 0,
-            "decks": [1],
+            "decks": ["unique-GUID-1234"],
             "level": 2,
             "exp": 120,
             "streak": 0,
@@ -17,7 +17,7 @@
         {
             "name": "Hugo",
             "colour": 1,
-            "decks": [1],
+            "decks": [],
             "level": 1,
             "exp": 40,
             "streak": 4,
@@ -27,27 +27,51 @@
             "lastWearableUpdateSerialized": "2025-01-24T16:42:01.1876710+00:00"
         }
     ],
+    "sessions": [
+        {
+            "deckID": "unique-GUID-1234",
+            "cardID": "1",
+            "dateComplete": "2025-01-24T16:42:01.1876310+00:00",
+            "reflection": 1
+        },
+        {
+            "deckID": "unique-GUID-1234",
+            "cardID": "2",
+            "dateComplete": "2025-01-24T16:42:01.1876310+00:00",
+            "reflection": 3
+        },
+        {
+            "deckID": "unique-GUID-1234",
+            "cardID": "6",
+            "dateComplete": "2025-01-24T16:42:01.1876310+00:00",
+            "reflection": 4
+        }
+    ],
     "decks": [
         {
-            "id": 1,
+            "id": "unique-GUID-1234",
             "title": "Spanish Revision",
             "cards": [
                 {
+                    "id" : "1",
                     "front" : "tree",
                     "back" : "árbol",
                     "double_sided" : true
                 },
                 {
+                    "id" : "2",
                     "front" : "game",
                     "back" : "juego",
                     "double_sided" : true
                 },
                 {
+                    "id" : "4",
                     "front" : "computer",
                     "back" : "computadora",
                     "double_sided" : true
                 },
                 {
+                    "id" : "6",
                     "front" : "river",
                     "back" : "río",
                     "double_sided" : true

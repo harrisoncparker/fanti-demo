@@ -18,9 +18,11 @@ public class GameStateManager : MonoBehaviour
     }
 
     public Fanti SelectedFanti { get; set; }
+    public DeckModel SelectedDeckModel { get; set; }
 
     public void ResetGame()
     {
         SelectedFanti = null;
+        SelectedDeckModel = null;
     }
 }

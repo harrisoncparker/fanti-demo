@@ -10,8 +10,11 @@ public class TextDisplay : MonoBehaviour
         _tmpText = (_tmpText == null) ? GetComponent<TMP_Text>() : _tmpText;
     }
 
-    public void UpdateText(string text)
+    public void UpdateText(string text, bool uppercase = true)
     {
+        if (uppercase) {
+            text = text.ToUpper();
+        }
         _tmpText.SetText(text);
     }
 }

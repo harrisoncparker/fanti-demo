@@ -21,12 +21,14 @@ public class HomeSceneManager : MonoBehaviour
         if (_spawnPoints == null || _spawnPoints.Length == 0)
         {
             Debug.LogError("No spawn points assigned in the HomeSceneManager.");
+            // Eventually these should be more like spawn surfaces than points
             return;
         }
 
         if (fantis == null || fantis.Count == 0)
         {
             Debug.LogWarning("No Fantis found in the player's save data.");
+            // This could be an opportunity to point players back to the Fantui shelter
             return;
         }
 
@@ -42,7 +44,9 @@ public class HomeSceneManager : MonoBehaviour
 
             HomeSpawnPoint spawnPoint = (HomeSpawnPoint)spawnPointsEnumerator.Current;
 
-            Fanti newFanti = Instantiate(_fantiPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
+            Vector2 spawnPosition = spawnPoint.transform.position + new Vector3(Random.Range(-3.0f, 3.0f),0,0);
+
+            Fanti newFanti = Instantiate(_fantiPrefab, spawnPosition, spawnPoint.transform.rotation);
             newFanti.Model = model;
 
             newFanti.transform.SetParent(spawnPoint.transform);
