@@ -228,6 +228,27 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
+  - name: Button Plain
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 3, y: 3, z: 3, w: 3}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 106
+      width: 106
+      height: 26
+    spriteID: 1ae5aca680b9e46ebb5a4632ba606cc5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
   asepriteLayers:
   - layerIndex: 0
     guid: 1897459908
@@ -263,6 +284,15 @@ ScriptedImporter:
         width: 106
         height: 26
       spriteId: bdf906b7bfb42404ab443b8043b5945a
+    - name: Frame_3
+      frameIndex: 3
+      additiveSortOrder: 0
+      cellRect:
+        x: 11
+        y: 11
+        width: 106
+        height: 26
+      spriteId: b2986fcf69f214e04bf1f9dde47ba99a
     linkedCells: []
     parentIndex: -1
   platformSettings:

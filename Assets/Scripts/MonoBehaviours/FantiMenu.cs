@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +9,7 @@ public class FantiMenu : MonoBehaviour
     [SerializeField] TextDisplay _streakTextDisplay;
     [SerializeField] TextDisplay _expTextDisplay;
 
-    [Header("Buttons")]
+    [Header("Elements")]
     [SerializeField] Button _playButton;
 
     [Header("Events")]
@@ -40,7 +39,7 @@ public class FantiMenu : MonoBehaviour
     void UpdateText(FantiModel fanti)
     {
         _fantiNameText.UpdateText(fanti.name, false);
-        _levelTextDisplay.UpdateText(fanti.level.ToString());
+        _levelTextDisplay.UpdateText(fanti.Level().ToString());
         _streakTextDisplay.UpdateText(fanti.streak.ToString());
         _expTextDisplay.UpdateText(fanti.exp.ToString());
     }

@@ -23,17 +23,30 @@ public class Fanti : MonoBehaviour
 
         GameStateManager.Instance.SelectedFanti = this;
 
-        SelectDeck();
+        SelectDecks();
     }
 
-    public void SelectDeck(int deckIndex = 0) 
+    public void SelectDecks(int deckIndex = 0) 
     {
         List<DeckModel> decks = Model.GetDecks();
 
         if(decks.Count < 1) {
             Debug.LogWarning(Model.name + " doeans't have any decks to load into the GameStateManager");
         } else {
-            GameStateManager.Instance.SelectedDeckModel = decks[deckIndex];
+            GameStateManager.Instance.SelectedDecks = decks;
         }
+    }
+
+    public int EarnExp(int exp)
+    {
+        int expToEarn = exp + (Model.streak * 10);
+        Model.exp += expToEarn;
+        return expToEarn;
+    }
+
+    public int IncrementStreak()
+    {
+        Model.streak++;
+        return Model.streak;
     }
 }

@@ -7,7 +7,6 @@ public class FantiModel : Model
     public string name;
     public ColourName colour;
     public List<string> deckIds;
-    public int level;
     public int exp;
     public int streak;
 
@@ -34,7 +33,6 @@ public class FantiModel : Model
         string name,
         ColourName colour = ColourName.Pink,
         List<string> deckIds = null,
-        int level = 1,
         int exp = 0,
         int streak = 0,
         int headWearableID = 0,
@@ -46,7 +44,6 @@ public class FantiModel : Model
         this.name = name;
         this.colour = colour;
         this.deckIds = deckIds ?? new List<string>();
-        this.level = level;
         this.exp = exp;
         this.streak = streak;
         this.headWearableID = headWearableID;
@@ -69,5 +66,25 @@ public class FantiModel : Model
         });
 
         return decks;
+    }
+
+    public int Level()
+    {
+        return GetLevelFromExp(exp);
+    }
+
+    int GetLevelFromExp(int experience)
+    {
+        // if (baseExp = 50) then curve looks something like this 
+        // lvl1 = 0, lvl2 = 50, lvl3 = 200, lvl4 = 450, lvl5 = 800
+        int baseExp = 50; 
+        int level = 1;
+
+        while (experience >= baseExp * level * level)
+        {
+            level++;
+        }
+
+        return level;
     }
 }

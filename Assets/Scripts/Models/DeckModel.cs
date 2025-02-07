@@ -15,15 +15,41 @@ public class DeckModel : Model
         this.cards = cards ?? new List<CardModel>();
     }
 
-    public static DeckModel Fake()
+    public List<CardModel> GetShuffledCards() {
+		int count = cards.Count;
+		int last = count - 1;
+
+        List<CardModel> shuffledCards = new(cards);
+
+		for (var i = 0; i < last; ++i) {
+			int r = UnityEngine.Random.Range(i, count);
+            (shuffledCards[r], shuffledCards[i]) = (shuffledCards[i], shuffledCards[r]);
+        }
+
+        return shuffledCards;
+	}
+
+    public static DeckModel FakeDoubleSided()
     {
         return new(
             "Spanish Revision",
             new List<CardModel> {
-                new("tree", "árbol", true),
-                new("game", "juego", true),
-                new("computer", "computadora", true),
-                new("river", "río", true),
+                new("tree", "árbol (spanish)", true),
+                new("game", "juego (spanish)", true),
+                new("computer", "computadora (spanish)", true),
+                new("river", "río (spanish)", true),
+            }
+        );
+    }
+
+    public static DeckModel FakeOneSided()
+    {
+        return new(
+            "Maths Revision",
+            new List<CardModel> {
+                new("1 + 1", "2", false),
+                new("7 x 3", "21", false),
+                new("Pythagorean theorem", "a2 + b2 = c2", false),
             }
         );
     }

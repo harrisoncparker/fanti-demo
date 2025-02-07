@@ -5,18 +5,21 @@ public class PlayerModel : Model
 {
     public string userName;
     public string email;
+    public int gold;
     public List<FantiModel> fantis;
     public List<DeckModel> decks;
 
     public PlayerModel(
         string userName,
         string email,
+        int gold = 0 ,
         List<FantiModel> fantis = null,
         List<DeckModel> decks = null
     )
     {
         this.userName = userName;
         this.email = email;
+        this.gold = gold;
         this.fantis = fantis ?? new List<FantiModel>();
         this.decks = decks ?? new List<DeckModel>();
     }
@@ -24,16 +27,18 @@ public class PlayerModel : Model
     public static PlayerModel Fake()
     {
         // Fake Decks
-        DeckModel fakeDeck = DeckModel.Fake();
+        DeckModel fakeDeckDoubleSided = DeckModel.FakeDoubleSided();
+
+        DeckModel fakeDeckOneSided = DeckModel.FakeOneSided();
 
         // Fake Fantis
         FantiModel fantalita = new("Fantalita");
         FantiModel hugo = new("Hugo", ColourName.Blue);
 
-        fantalita.level = 2;
-        fantalita.exp = 120;
+        fantalita.exp = 60;
         fantalita.deckIds = new List<string> {
-            fakeDeck.id
+            fakeDeckDoubleSided.id,
+            fakeDeckOneSided.id
         };
 
         hugo.streak = 4;
@@ -43,12 +48,14 @@ public class PlayerModel : Model
         PlayerModel fakePlayer = new(
             "Harrison",
             "test@gmail.com",
+            0,
             new() { 
                 fantalita, 
                 hugo
             },
             new() { 
-                fakeDeck 
+                fakeDeckDoubleSided,
+                fakeDeckOneSided
             }
         );
 
