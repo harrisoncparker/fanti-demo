@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameStateManager : MonoBehaviour
@@ -19,11 +18,9 @@ public class GameStateManager : MonoBehaviour
     }
 
     public Fanti SelectedFanti { get; set; }
-    public List<DeckModel> SelectedDecks { get; set; }
 
     public void ResetGame()
     {
         SelectedFanti = null;
-        SelectedDecks = null;
     }
 }

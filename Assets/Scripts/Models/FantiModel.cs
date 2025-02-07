@@ -10,23 +10,57 @@ public class FantiModel : Model
     public int exp;
     public int streak;
 
+    public int Level
+    {
+        get => GetLevelFromExp(exp);
+    }
+
     // Wearable IDs
     public int headWearableID;
     public int faceWearableID;
 
-    // Timestamps
-    public string lastPlaySessionSerialized;
-    public System.DateTime LastPlaySession
+    // Serialized Timestamps
+    public string lastPlaySession;
+    public System.DateTime LastPlaySessionDateTime
     {
-        get => DeserializeDateTime(lastPlaySessionSerialized);
-        set => lastPlaySessionSerialized = value.ToString("o");
+        get => DeserializeDateTime(lastPlaySession);
+        set => lastPlaySession = value.ToString("o");
     }
 
-    public string lastWearableUpdateSerialized;
-    public System.DateTime LastWearableUpdate
+    public string lastWearableUpdate;
+    public System.DateTime LastWearableUpdateDateTime
     {
-        get => DeserializeDateTime(lastWearableUpdateSerialized);
-        set => lastWearableUpdateSerialized = value.ToString("o");
+        get => DeserializeDateTime(lastWearableUpdate);
+        set => lastWearableUpdate = value.ToString("o");
+    }
+
+    public List<DeckModel> Decks
+    {
+        get {
+            List<DeckModel> decks = new();
+
+            deckIds.ForEach(deckID => {
+                SaveDataManager.Instance.CurrentPlayerModel.decks.ForEach(deck =>
+                {
+                    if (deck.id == deckID) decks.Add(deck);
+                });
+            });
+
+            return decks;
+        }
+    }
+
+    public List<CardModel> ScheduledCards
+    {
+        get { 
+            List<CardModel> combinedCards = new();
+
+            Decks.ForEach(deck => {
+                combinedCards.AddRange(deck.ScheduledCards);
+            });
+
+            return DeckModel.ShuffleCards(combinedCards);
+        }
     }
 
     public FantiModel(
@@ -37,8 +71,8 @@ public class FantiModel : Model
         int streak = 0,
         int headWearableID = 0,
         int faceWearableID = 0,
-        System.DateTime? lastPlaySession = null,
-        System.DateTime? lastWearableUpdate = null
+        System.DateTime? lastPlaySessionDateTime = null,
+        System.DateTime? lastWearableUpdateDateTime = null
     )
     {
         this.name = name;
@@ -49,28 +83,8 @@ public class FantiModel : Model
         this.headWearableID = headWearableID;
         this.faceWearableID = faceWearableID;
 
-        LastPlaySession = lastPlaySession ?? System.DateTime.Now;
-        LastWearableUpdate = lastWearableUpdate ?? System.DateTime.Now;
-    }
-
-    public List<DeckModel> GetDecks() {
-        List<DeckModel> decks = new();
-
-        deckIds.ForEach(deckID => {
-            SaveDataManager.Instance.CurrentPlayerModel.decks.ForEach(deck => {
-
-                if (deck.id == deckID) {
-                    decks.Add(deck);
-                }
-            });
-        });
-
-        return decks;
-    }
-
-    public int Level()
-    {
-        return GetLevelFromExp(exp);
+        LastPlaySessionDateTime = lastPlaySessionDateTime ?? System.DateTime.Now;
+        LastWearableUpdateDateTime = lastWearableUpdateDateTime ?? System.DateTime.Now;
     }
 
     int GetLevelFromExp(int experience)

@@ -11,6 +11,7 @@ public class FantiMenu : MonoBehaviour
 
     [Header("Elements")]
     [SerializeField] Button _playButton;
+    [SerializeField] Button _addDecksButton;
 
     [Header("Events")]
     [SerializeField] GameEvent _fantiMenuLoadedEvent;
@@ -39,7 +40,7 @@ public class FantiMenu : MonoBehaviour
     void UpdateText(FantiModel fanti)
     {
         _fantiNameText.UpdateText(fanti.name, false);
-        _levelTextDisplay.UpdateText(fanti.Level().ToString());
+        _levelTextDisplay.UpdateText(fanti.Level.ToString());
         _streakTextDisplay.UpdateText(fanti.streak.ToString());
         _expTextDisplay.UpdateText(fanti.exp.ToString());
     }
@@ -47,5 +48,8 @@ public class FantiMenu : MonoBehaviour
     void UpdateButtons(FantiModel fanti)
     {
         _playButton.gameObject.SetActive(fanti.deckIds.Count >= 1);
+        _playButton.interactable = fanti.ScheduledCards.Count >= 1;
+        
+        _addDecksButton.gameObject.SetActive(fanti.deckIds.Count < 1);
     }
 }

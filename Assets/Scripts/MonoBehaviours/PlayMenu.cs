@@ -49,17 +49,8 @@ public class PlayMenu : MonoBehaviour
     public void Load()
     {
         StartCoroutine(Utilities.WaitForAFrameThen(() => {
-            LoadDecks();
+            SetupPlaySession();
         }));
-    }
-
-    /**
-     * Reveal the answer
-     */
-    public void RevealAnswer()
-    {
-        _selfAssessmentGameObject.SetActive(true);
-        _answerRevealButton.gameObject.SetActive(false);
     }
 
     /**
@@ -67,10 +58,12 @@ public class PlayMenu : MonoBehaviour
      */
     public void SubmitSelfAssesment(int score)
     {
+        _cardsToPlay[_playIndex].Review(score);
+
+        SaveDataManager.Instance.SaveData();
+
         _playIndex++;
         _score += score;
-
-        Debug.Log("Score: " + _score);
 
         if (_playIndex >= _cardsToPlay.Count) {
             FinishPlaySession();
@@ -80,9 +73,19 @@ public class PlayMenu : MonoBehaviour
         LoadCard(_cardsToPlay[_playIndex]);
     }
 
-    /**
-     * Finish the play session
-     */
+    void SetupPlaySession()
+    {
+        ResetPlaySession();
+
+        _cardsToPlay = new(GameStateManager.Instance.SelectedFanti.Model.ScheduledCards);
+
+        LoadCard(_cardsToPlay[_playIndex]);
+
+        StartCoroutine(Utilities.WaitForAFrameThen(() => { 
+            _playMenuLoadedEvent.Raise(gameObject);
+        }));
+    }
+
     void FinishPlaySession()
     {
         _overlayGameObject.SetActive(true);
@@ -101,7 +104,46 @@ public class PlayMenu : MonoBehaviour
         _streakTextDisplay.UpdateText(streak.ToString());
 
         // @TODO: Notify the player if the Fanti leveled up
-        // @TODO: Save the player and fanti data
+
+        SaveDataManager.Instance.SaveData();
+    }
+
+    void ResetPlaySession() 
+    {
+        _playIndex = 0;
+        _score = 0;
+        _overlayGameObject.SetActive(false);
+        _exitButton.gameObject.SetActive(true);
+        PlayFantiAnimation(true);
+        HideAnswer();
+    }
+
+    /**
+     * @param card - The card to load
+     */
+    void LoadCard(CardModel card)
+    {
+        if (card.doubleSided && Random.value > 0.5f) {
+            _questionTextDisplay.UpdateText(card.back);
+            _answerTextDisplay.UpdateText(card.front);
+        } else {
+            _questionTextDisplay.UpdateText(card.front);
+            _answerTextDisplay.UpdateText(card.back);
+        }
+
+        HideAnswer();
+    }
+
+    public void RevealAnswer()
+    {
+        _selfAssessmentGameObject.SetActive(true);
+        _answerRevealButton.gameObject.SetActive(false);
+    }
+
+    void HideAnswer()
+    {
+        _selfAssessmentGameObject.SetActive(false);
+        _answerRevealButton.gameObject.SetActive(true);
     }
 
     /**
@@ -126,74 +168,5 @@ public class PlayMenu : MonoBehaviour
         LeanTween.moveY(_fantiCloseupRectTransform, targetY, _animationSeconds);
 
         // @TODO Play sprite animation ...
-    }
-
-    /**
-     * Load the decks
-     */
-    void LoadDecks()
-    {
-        Reset();
-
-        _cardsToPlay = SelectCards(GameStateManager.Instance.SelectedDecks);
-
-        LoadCard(_cardsToPlay[_playIndex]);
-
-        StartCoroutine(Utilities.WaitForAFrameThen(() => { 
-            _playMenuLoadedEvent.Raise(gameObject);
-        }));
-    }
-
-    /**
-     * Reset the play session
-     */
-    void Reset() {
-        _playIndex = 0;
-        _score = 0;
-        _overlayGameObject.SetActive(false);
-        _exitButton.gameObject.SetActive(true);
-        PlayFantiAnimation(true);
-        HideAnswer();
-    }
-
-    /**
-     * Hide the answer
-     */
-    void HideAnswer()
-    {
-        _selfAssessmentGameObject.SetActive(false);
-        _answerRevealButton.gameObject.SetActive(true);
-    }
-
-    /**
-     * @param decks - The decks to select cards from
-     * @return List<CardModel> - The selected cards
-     */
-    List<CardModel> SelectCards(List<DeckModel> decks) {
-        // @TODO only select the cards that need to be played
-
-        DeckModel combinedDeck = new("combined");
-
-        decks.ForEach(deck => {
-            combinedDeck.cards.AddRange(deck.cards);
-        });
-
-        return combinedDeck.GetShuffledCards();
-    }
-
-    /**
-     * @param card - The card to load
-     */
-    void LoadCard(CardModel card)
-    {
-        if (card.doubleSided && Random.value > 0.5f) {
-            _questionTextDisplay.UpdateText(card.back);
-            _answerTextDisplay.UpdateText(card.front);
-        } else {
-            _questionTextDisplay.UpdateText(card.front);
-            _answerTextDisplay.UpdateText(card.back);
-        }
-
-        HideAnswer();
     }
 }

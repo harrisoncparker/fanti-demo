@@ -8,6 +8,11 @@ public class DeckModel : Model
     public string title;
     public List<CardModel> cards;
 
+    public List<CardModel> ScheduledCards
+    {
+        get => cards.FindAll(card => card.NextReviewDateTime <= DateTime.Now);
+    }
+
     public DeckModel(string title, List<CardModel> cards = null, string id = null)
     {
         this.id = id ?? Guid.NewGuid().ToString();
@@ -15,7 +20,7 @@ public class DeckModel : Model
         this.cards = cards ?? new List<CardModel>();
     }
 
-    public List<CardModel> GetShuffledCards() {
+    public static List<CardModel> ShuffleCards(List<CardModel> cards) {
 		int count = cards.Count;
 		int last = count - 1;
 
@@ -35,9 +40,9 @@ public class DeckModel : Model
             "Spanish Revision",
             new List<CardModel> {
                 new("tree", "árbol (spanish)", true),
-                new("game", "juego (spanish)", true),
-                new("computer", "computadora (spanish)", true),
-                new("river", "río (spanish)", true),
+                // new("game", "juego (spanish)", true),
+                // new("computer", "computadora (spanish)", true),
+                // new("river", "río (spanish)", true),
             }
         );
     }
@@ -48,8 +53,8 @@ public class DeckModel : Model
             "Maths Revision",
             new List<CardModel> {
                 new("1 + 1", "2", false),
-                new("7 x 3", "21", false),
-                new("Pythagorean theorem", "a2 + b2 = c2", false),
+                // new("7 x 3", "21", false),
+                // new("Pythagorean theorem", "a2 + b2 = c2", false),
             }
         );
     }

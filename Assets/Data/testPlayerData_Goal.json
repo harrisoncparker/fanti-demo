@@ -25,26 +25,6 @@
             "lastWearableUpdateSerialized": "2025-01-24T16:42:01.1876710+00:00"
         }
     ],
-    "sessions": [
-        {
-            "deckID": "unique-GUID-1234",
-            "cardID": "1",
-            "dateComplete": "2025-01-24T16:42:01.1876310+00:00",
-            "reflection": 1
-        },
-        {
-            "deckID": "unique-GUID-1234",
-            "cardID": "2",
-            "dateComplete": "2025-01-24T16:42:01.1876310+00:00",
-            "reflection": 3
-        },
-        {
-            "deckID": "unique-GUID-1234",
-            "cardID": "6",
-            "dateComplete": "2025-01-24T16:42:01.1876310+00:00",
-            "reflection": 4
-        }
-    ],
     "decks": [
         {
             "id": "unique-GUID-1234",
@@ -54,25 +34,21 @@
                     "id" : "1",
                     "front" : "tree",
                     "back" : "árbol",
-                    "double_sided" : true
+                    "double_sided" : true,
+                    "reviewCount": 0,
+                    "easinessFactor": 2.5,
+                    "intervalDays": 1,
+                    "lastReviewSerialized": "2025-02-06T18:26:21.2662260+00:00"
                 },
                 {
                     "id" : "2",
                     "front" : "game",
                     "back" : "juego",
-                    "double_sided" : true
-                },
-                {
-                    "id" : "4",
-                    "front" : "computer",
-                    "back" : "computadora",
-                    "double_sided" : true
-                },
-                {
-                    "id" : "6",
-                    "front" : "river",
-                    "back" : "río",
-                    "double_sided" : true
+                    "double_sided" : true,
+                    "reviewCount": 0,
+                    "easinessFactor": 2.5,
+                    "intervalDays": 1,
+                    "lastReviewSerialized": "2025-02-06T18:26:21.2662260+00:00"
                 }
             ]
         }
