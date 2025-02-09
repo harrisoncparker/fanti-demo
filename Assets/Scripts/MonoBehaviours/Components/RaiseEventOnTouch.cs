@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Collider2D))]
 public class RaiseEventOnTouch : MonoBehaviour
@@ -35,6 +36,8 @@ public class RaiseEventOnTouch : MonoBehaviour
 
     bool CheckPointerHit(Vector2 position)
     {
+        if (EventSystem.current.IsPointerOverGameObject()) return false;
+
         if (Camera.main == null)
         {
             Debug.LogError("Camera.main is null. Ensure there is a Camera tagged as MainCamera in the scene.");
