@@ -93,7 +93,7 @@ public class PlayMenu : MonoBehaviour
 
         PlayFantiAnimation();
 
-        int cardsPlayed = _playIndex + 1;
+        int cardsPlayed = _playIndex;
         int goldEarned  = cardsPlayed * 10; // @TODO: GameStateManager.Instance.CurrentPlayer.EarnGoldForCards(cardsPlayed);
         int expGained   = GameStateManager.Instance.SelectedFanti.EarnExp(100);
         int streak      = GameStateManager.Instance.SelectedFanti.IncrementStreak();
