@@ -40,9 +40,9 @@ public class DeckModel : Model
             "Spanish Revision",
             new List<CardModel> {
                 new("tree", "árbol (spanish)", true),
-                // new("game", "juego (spanish)", true),
-                // new("computer", "computadora (spanish)", true),
-                // new("river", "río (spanish)", true),
+                new("game", "juego (spanish)", true),
+                new("computer", "computadora (spanish)", true),
+                new("river", "río (spanish)", true),
             }
         );
     }
@@ -53,8 +53,21 @@ public class DeckModel : Model
             "Maths Revision",
             new List<CardModel> {
                 new("1 + 1", "2", false),
-                // new("7 x 3", "21", false),
-                // new("Pythagorean theorem", "a2 + b2 = c2", false),
+                new("7 x 3", "21", false),
+                new("Pythagorean theorem", "a2 + b2 = c2", false),
+            }
+        );
+    }
+
+    public static DeckModel FakeMixedSided()
+    {
+        return new(
+            "Animal Quiz",
+            new List<CardModel> {
+                new("Prey: Rabbit", "Preditor: Fox", true),
+                new("Prey: Zebra", "Preditor: Lion", true),
+                new("Largest Animal", "Blue Whale", false),
+                new("Tallest Animal", "Giraffe", true),
             }
         );
     }

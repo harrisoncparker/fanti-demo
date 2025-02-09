@@ -40,7 +40,7 @@ public class FantiModel : Model
             List<DeckModel> decks = new();
 
             deckIds.ForEach(deckID => {
-                SaveDataManager.Instance.CurrentPlayerModel.decks.ForEach(deck =>
+                GameStateManager.Instance.CurrentPlayer.Model.decks.ForEach(deck =>
                 {
                     if (deck.id == deckID) decks.Add(deck);
                 });

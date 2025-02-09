@@ -9,6 +9,18 @@ public class PlayerModel : Model
     public List<FantiModel> fantis;
     public List<DeckModel> decks;
 
+    public List<CardModel> ScheduledCards
+    {
+        get {
+            List<CardModel> scheduledCards = new();
+            foreach (FantiModel fanti in fantis)
+            {
+                scheduledCards.AddRange(fanti.ScheduledCards);
+            }
+            return scheduledCards;
+        }
+    }
+
     public PlayerModel(
         string userName,
         string email,
@@ -31,6 +43,8 @@ public class PlayerModel : Model
 
         DeckModel fakeDeckOneSided = DeckModel.FakeOneSided();
 
+        DeckModel fakeDeckMixedSided = DeckModel.FakeMixedSided();
+
         // Fake Fantis
         FantiModel fantalita = new("Fantalita");
         FantiModel hugo = new("Hugo", ColourName.Blue);
@@ -43,6 +57,9 @@ public class PlayerModel : Model
 
         hugo.streak = 4;
         hugo.exp = 40;
+        hugo.deckIds = new List<string> {
+            fakeDeckMixedSided.id
+        };
 
         // Fake Player
         PlayerModel fakePlayer = new(
@@ -55,7 +72,8 @@ public class PlayerModel : Model
             },
             new() { 
                 fakeDeckDoubleSided,
-                fakeDeckOneSided
+                fakeDeckOneSided,
+                fakeDeckMixedSided
             }
         );
 

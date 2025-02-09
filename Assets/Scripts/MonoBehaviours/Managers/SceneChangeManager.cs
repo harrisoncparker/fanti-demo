@@ -26,7 +26,7 @@ public class SceneChangeManager : MonoBehaviour
 
     void LoadScene(string sceneName = "")
     {
-        _loadSceneEvent.Raise(gameObject); // @TODO decide if this should be after the next if statment
+        _loadSceneEvent.Raise(); // @TODO decide if this should be after the next if statment
 
         if (_currentContentScene == sceneName) return;
 

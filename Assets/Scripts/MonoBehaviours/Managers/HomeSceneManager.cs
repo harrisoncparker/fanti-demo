@@ -16,7 +16,7 @@ public class HomeSceneManager : MonoBehaviour
 
     public void LoadFantis()
     {
-        List<FantiModel> fantis = SaveDataManager.Instance.CurrentPlayerModel.fantis;
+        List<FantiModel> fantis = GameStateManager.Instance.CurrentPlayer.Model.fantis;
 
         if (_spawnPoints == null || _spawnPoints.Length == 0)
         {

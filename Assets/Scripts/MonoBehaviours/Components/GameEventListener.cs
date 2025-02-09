@@ -28,7 +28,7 @@ public class GameEventListener : MonoBehaviour
         }
     }
 
-    public void OnEventRaised(GameObject source)
+    public void OnEventRaised(GameObject source = null)
     {
         _eventSource = source;
         _response.Invoke();

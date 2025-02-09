@@ -23,6 +23,7 @@ public class PlayMenu : MonoBehaviour
 
     [Header("Events")]
     [SerializeField] GameEvent _playMenuLoadedEvent;
+    [SerializeField] GameEvent _cardReviewedEvent;
 
     List<CardModel> _cardsToPlay;
     int _playIndex = 0;
@@ -59,6 +60,7 @@ public class PlayMenu : MonoBehaviour
     public void SubmitSelfAssesment(int score)
     {
         _cardsToPlay[_playIndex].Review(score);
+        _cardReviewedEvent.Raise();
 
         SaveDataManager.Instance.SaveData();
 
@@ -82,7 +84,7 @@ public class PlayMenu : MonoBehaviour
         LoadCard(_cardsToPlay[_playIndex]);
 
         StartCoroutine(Utilities.WaitForAFrameThen(() => { 
-            _playMenuLoadedEvent.Raise(gameObject);
+            _playMenuLoadedEvent.Raise();
         }));
     }
 
@@ -94,9 +96,13 @@ public class PlayMenu : MonoBehaviour
         PlayFantiAnimation();
 
         int cardsPlayed = _playIndex;
-        int goldEarned  = cardsPlayed * 10; // @TODO: GameStateManager.Instance.CurrentPlayer.EarnGoldForCards(cardsPlayed);
+        Debug.Log("Cards played: " + cardsPlayed);
+        int goldEarned  = GameStateManager.Instance.CurrentPlayer.EarnGoldForCards(cardsPlayed);
         int expGained   = GameStateManager.Instance.SelectedFanti.EarnExp(100);
         int streak      = GameStateManager.Instance.SelectedFanti.IncrementStreak();
+        Debug.Log("Gold earned: " + goldEarned);
+        Debug.Log("Exp gained: " + expGained);
+        Debug.Log("Streak: " + streak);
 
         _cardedPlayedTextDisplay.UpdateText(cardsPlayed.ToString());
         _goldEarnedTextDisplay.UpdateText(goldEarned.ToString());

@@ -4,7 +4,6 @@ using UnityEngine;
 public class SaveDataManager : MonoBehaviour
 {   
     public static SaveDataManager Instance { get; set; }
-    public PlayerModel CurrentPlayerModel { get; private set; }
 
     [Header("Events")]
     [SerializeField] GameEvent _saveDataLoadedEvent;
@@ -30,7 +29,7 @@ public class SaveDataManager : MonoBehaviour
     {
         // Test data
         if (_useTestData) {
-            Instance.CurrentPlayerModel = PlayerModel.Fake();
+            GameStateManager.Instance.CurrentPlayer.Model = PlayerModel.Fake();
             SaveData();
         }
 
@@ -40,13 +39,13 @@ public class SaveDataManager : MonoBehaviour
 
     public void SaveData()
     {
-        LocalSaveSystem.SaveData(Instance.CurrentPlayerModel, _useTestData);
+        LocalSaveSystem.SaveData(GameStateManager.Instance.CurrentPlayer.Model, _useTestData);
     }
 
     public void LoadData()
     {
-        Instance.CurrentPlayerModel = LocalSaveSystem.LoadData();
-        Instance._saveDataLoadedEvent.Raise(gameObject);
+        GameStateManager.Instance.CurrentPlayer.Model = LocalSaveSystem.LoadData();
+        Instance._saveDataLoadedEvent.Raise();
     }
 }
 

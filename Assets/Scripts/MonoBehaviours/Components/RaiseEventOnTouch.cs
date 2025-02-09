@@ -29,7 +29,7 @@ public class RaiseEventOnTouch : MonoBehaviour
     {
         if (_isPointerDown && CheckPointerHit(position))
         {
-            _onPointerUpEvent?.Raise(gameObject);
+            _onPointerUpEvent?.RaiseWithSource(gameObject);
             _isPointerDown = false;
         }
     }

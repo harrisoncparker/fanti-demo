@@ -33,7 +33,7 @@ public class FantiMenu : MonoBehaviour
         // loaded before displaying the fanti menu. Eventually this should 
         // be a more robust loading buffer.
         StartCoroutine(Utilities.WaitForAFrameThen(() => { 
-            _fantiMenuLoadedEvent.Raise(gameObject);
+            _fantiMenuLoadedEvent.Raise();
         }));
     }
 
