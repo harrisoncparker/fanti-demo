@@ -5,6 +5,8 @@ public class SceneChangeManager : MonoBehaviour
 {
     string _currentContentScene = "";
 
+    public GameEvent _loadSceneEvent;
+
     void Start()
     {
         // If second scene is already loaded set it as content scene
@@ -24,6 +26,8 @@ public class SceneChangeManager : MonoBehaviour
 
     void LoadScene(string sceneName = "")
     {
+        _loadSceneEvent.Raise(gameObject); // @TODO decide if this should be after the next if statment
+
         if (_currentContentScene == sceneName) return;
 
         UnloadCurrentContentScene();

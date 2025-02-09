@@ -1909,7 +1909,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8253f15c823484adab3f754d9e91a364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameEvent: {fileID: 11400000, guid: d77690fa77ca24a3d83c5adf3f01c5ba, type: 2}
+  _gameEvents:
+  - {fileID: 11400000, guid: d77690fa77ca24a3d83c5adf3f01c5ba, type: 2}
   _response:
     m_PersistentCalls:
       m_Calls:
@@ -2635,7 +2636,6 @@ GameObject:
   - component: {fileID: 598819515}
   - component: {fileID: 598819519}
   - component: {fileID: 598819517}
-  - component: {fileID: 598819520}
   m_Layer: 5
   m_Name: Fanti Menu Canvas
   m_TagString: Untagged
@@ -2738,7 +2738,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8253f15c823484adab3f754d9e91a364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameEvent: {fileID: 11400000, guid: 76fee941c5066447e81dd489deaf77a8, type: 2}
+  _gameEvents:
+  - {fileID: 11400000, guid: 76fee941c5066447e81dd489deaf77a8, type: 2}
   _response:
     m_PersistentCalls:
       m_Calls:
@@ -2781,7 +2782,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8253f15c823484adab3f754d9e91a364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameEvent: {fileID: 11400000, guid: a4a24aea62fc949b8a99d822b8f7f6ee, type: 2}
+  _gameEvents:
+  - {fileID: 11400000, guid: a4a24aea62fc949b8a99d822b8f7f6ee, type: 2}
+  - {fileID: 11400000, guid: bae55223d500f467fb36ba8f94290159, type: 2}
+  - {fileID: 11400000, guid: 991c4f25a9a8e4df18b021b2fa4a2309, type: 2}
   _response:
     m_PersistentCalls:
       m_Calls:
@@ -2829,42 +2833,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8253f15c823484adab3f754d9e91a364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameEvent: {fileID: 11400000, guid: 86ff599c0fb9a47fab3f68c81f096963, type: 2}
+  _gameEvents:
+  - {fileID: 11400000, guid: 86ff599c0fb9a47fab3f68c81f096963, type: 2}
   _response:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 598819516}
         m_TargetAssemblyTypeName: VisibilityToggler, Assembly-CSharp
         m_MethodName: Open
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _eventSource: {fileID: 0}
---- !u!114 &598819520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 598819510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8253f15c823484adab3f754d9e91a364, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gameEvent: {fileID: 11400000, guid: bae55223d500f467fb36ba8f94290159, type: 2}
-  _response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 598819516}
-        m_TargetAssemblyTypeName: VisibilityToggler, Assembly-CSharp
-        m_MethodName: Close
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3909,7 +3885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8253f15c823484adab3f754d9e91a364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameEvent: {fileID: 11400000, guid: c3bc9713d035f414681f973af0378def, type: 2}
+  _gameEvents: []
   _response:
     m_PersistentCalls:
       m_Calls:
@@ -4927,6 +4903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 631e822acc3bd4a0ba152efb4c17a54c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _loadSceneEvent: {fileID: 11400000, guid: 991c4f25a9a8e4df18b021b2fa4a2309, type: 2}
 --- !u!4 &1044868370
 Transform:
   m_ObjectHideFlags: 0
@@ -8336,7 +8313,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8253f15c823484adab3f754d9e91a364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameEvent: {fileID: 11400000, guid: 18b812121c93d4324b7e243845fb86ec, type: 2}
+  _gameEvents:
+  - {fileID: 11400000, guid: 18b812121c93d4324b7e243845fb86ec, type: 2}
   _response:
     m_PersistentCalls:
       m_Calls:
@@ -8365,7 +8343,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8253f15c823484adab3f754d9e91a364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameEvent: {fileID: 11400000, guid: bae55223d500f467fb36ba8f94290159, type: 2}
+  _gameEvents:
+  - {fileID: 11400000, guid: bae55223d500f467fb36ba8f94290159, type: 2}
   _response:
     m_PersistentCalls:
       m_Calls:
@@ -8432,7 +8411,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8253f15c823484adab3f754d9e91a364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameEvent: {fileID: 11400000, guid: bb5595ba4b45a48b3a19523f967c8275, type: 2}
+  _gameEvents:
+  - {fileID: 11400000, guid: bb5595ba4b45a48b3a19523f967c8275, type: 2}
   _response:
     m_PersistentCalls:
       m_Calls:
@@ -8461,7 +8441,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8253f15c823484adab3f754d9e91a364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameEvent: {fileID: 11400000, guid: c3bc9713d035f414681f973af0378def, type: 2}
+  _gameEvents:
+  - {fileID: 11400000, guid: c3bc9713d035f414681f973af0378def, type: 2}
   _response:
     m_PersistentCalls:
       m_Calls:

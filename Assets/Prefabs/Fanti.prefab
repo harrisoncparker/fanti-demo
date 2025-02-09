@@ -95,14 +95,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2f453f2415884239809544698d642e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: 
-  _colour: 
-  _decks: []
-  _level: 0
-  _exp: 0
-  _streak: 0
-  _headWearable: 0
-  _faceWearable: 0
 --- !u!114 &5688079051166644324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,7 +120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8253f15c823484adab3f754d9e91a364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameEvent: {fileID: 11400000, guid: 76fee941c5066447e81dd489deaf77a8, type: 2}
+  _gameEvents:
+  - {fileID: 11400000, guid: 76fee941c5066447e81dd489deaf77a8, type: 2}
   _response:
     m_PersistentCalls:
       m_Calls:
@@ -144,7 +137,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _eventSource: {fileID: 0}
+  _eventSource: {fileID: 4219983967722445225}
 --- !u!114 &3709092234379699746
 MonoBehaviour:
   m_ObjectHideFlags: 0
