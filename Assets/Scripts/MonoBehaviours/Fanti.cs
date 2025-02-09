@@ -23,9 +23,9 @@ public class Fanti : MonoBehaviour
         GameStateManager.Instance.SelectedFanti = this;
     }
 
-    public int EarnExp(int exp)
+    public int EarnExp()
     {
-        int expToEarn = exp + (Model.streak * 10);
+        int expToEarn = 50 + (Model.streak * 5);
         Model.exp += expToEarn;
         return expToEarn;
     }

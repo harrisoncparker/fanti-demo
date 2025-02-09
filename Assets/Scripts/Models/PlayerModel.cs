@@ -49,14 +49,13 @@ public class PlayerModel : Model
         FantiModel fantalita = new("Fantalita");
         FantiModel hugo = new("Hugo", ColourName.Blue);
 
-        fantalita.exp = 60;
+        fantalita.streak = 3;
+        fantalita.exp = 315;
         fantalita.deckIds = new List<string> {
             fakeDeckDoubleSided.id,
             fakeDeckOneSided.id
         };
 
-        hugo.streak = 4;
-        hugo.exp = 40;
         hugo.deckIds = new List<string> {
             fakeDeckMixedSided.id
         };

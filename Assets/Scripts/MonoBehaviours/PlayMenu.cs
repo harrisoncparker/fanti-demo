@@ -13,6 +13,7 @@ public class PlayMenu : MonoBehaviour
     [SerializeField] TextDisplay _goldEarnedTextDisplay;
     [SerializeField] TextDisplay _expGainedTextDisplay;
     [SerializeField] TextDisplay _streakTextDisplay;
+    [SerializeField] TextDisplay _levelUpTextDisplay;
 
     [Header("Elements")]
     [SerializeField] GameObject _selfAssessmentGameObject;
@@ -96,28 +97,32 @@ public class PlayMenu : MonoBehaviour
         PlayFantiAnimation();
 
         int cardsPlayed = _playIndex;
-        int streak      = GameStateManager.Instance.SelectedFanti.Model.streak;
-        int goldEarned  = GameStateManager.Instance.CurrentPlayer.EarnGoldForCards(cardsPlayed + streak);
-        streak          = GameStateManager.Instance.SelectedFanti.IncrementStreak();
-        int expGained   = GameStateManager.Instance.SelectedFanti.EarnExp(100);
-        
-
+        int streak = GameStateManager.Instance.SelectedFanti.Model.streak;
+        int goldEarned = GameStateManager.Instance.CurrentPlayer.EarnGoldForCards(cardsPlayed + streak);
+        streak = GameStateManager.Instance.SelectedFanti.IncrementStreak();
+        int initLevel = GameStateManager.Instance.SelectedFanti.Model.Level;
+        int expGained = GameStateManager.Instance.SelectedFanti.EarnExp();
+    
         _cardedPlayedTextDisplay.UpdateText(cardsPlayed.ToString());
         _goldEarnedTextDisplay.UpdateText(goldEarned.ToString());
         _expGainedTextDisplay.UpdateText(expGained.ToString());
         _streakTextDisplay.UpdateText(streak.ToString());
 
-        // @TODO: Notify the player if the Fanti leveled up
+        if(initLevel < GameStateManager.Instance.SelectedFanti.Model.Level) {
+            _levelUpTextDisplay.UpdateText(GameStateManager.Instance.SelectedFanti.Model.name + " Leveled Up!");
+            _levelUpTextDisplay.gameObject.SetActive(true);
+        }
 
         SaveDataManager.Instance.SaveData();
     }
 
     void ResetPlaySession() 
     {
-        _playIndex = 0;
-        _score = 0;
+        _playIndex  = 0;
+        _score      = 0;
         _overlayGameObject.SetActive(false);
         _exitButton.gameObject.SetActive(true);
+        _levelUpTextDisplay.gameObject.SetActive(false);
         PlayFantiAnimation(true);
         HideAnswer();
     }
