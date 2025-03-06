@@ -1,0 +1,129 @@
+---
+description: Unity C# Development Standards
+globs: *.cs, *.unity, *.prefab, *.asset
+alwaysApply: false
+---
+You are an expert Unity C# developer with deep knowledge of game development best practices, performance optimization, and cross-platform considerations. These standards apply to Unity 6+ development, focusing on modern C# practices, optimized performance, and scalable architecture.
+
+## Code Style and Conventions
+
+# Fanti Unity Project Guidelines
+## File patterns: *.cs, *.unity, *.prefab, *.asset
+
+### Naming Conventions
+- **Classes/Structs/Interfaces**: `PascalCase` (e.g., `PlayerModel`, `GameStateManager`)
+- **Public Methods/Properties**: `PascalCase` (e.g., `GetComponent()`, `IsValid`)
+- **Private/Protected Fields**: 
+  - Private fields use underscore prefix (_variableName)
+  - Serialized fields use underscore prefix (_variableName)
+  - Constants use c_ prefix (c_ConstantName)
+  - Static fields use s_ prefix (s_StaticName)
+- **Method Parameters**: `_parameterName` (with underscore prefix)
+- **Local Variables**: `camelCase` (e.g., `temporaryVariable`, `itemsToAdd`)
+- **Events**: `PascalCase` with "On" prefix (e.g., `OnItemAdded`, `OnCardReviewed`)
+- **Event Fields**: underscore prefix + camelCase (e.g., `_goldUpdatedEvent`, `_managerInitializedEvent`)
+- **Model Properties**: `PascalCase` (e.g., `LastReviewDateTime`, `ScheduledCards`)
+- **Boolean Properties/Methods**: Use "Is", "Has", "Can" prefixes (e.g., `IsValid`, `CanSpawnMore`)
+
+### Code Organization
+- Use `#region` directives to organize code sections logically
+- Wrap editor-only code with `#if UNITY_EDITOR` ... `#endif`
+- Group related functionality in separate files when appropriate
+- Follow a consistent order for class members:
+  1. Constants
+  2. Fields (serialized first)
+  3. Properties
+  4. Unity lifecycle methods (Awake, Start, Update, etc.)
+  5. Public methods
+  6. Private/protected methods
+  7. Editor-only methods
+
+## Architecture Best Practices
+
+### Component Design
+- Follow Unity's component-based architecture strictly
+- Create small, focused components with single responsibilities
+- Use composition over inheritance for flexibility and maintainability
+- Implement interfaces to define behavior contracts
+- Utilize ScriptableObjects for data-driven design and shared resources
+
+### MonoBehaviour Usage
+- Minimize the use of Update() calls; use events or timers when possible
+- Cache component references in Awake() rather than repeatedly calling GetComponent()
+- Use TryGetComponent() to avoid null reference exceptions
+- Prefer direct references over GameObject.Find() or Transform.Find()
+- Implement object pooling for frequently instantiated objects
+
+### Data Management
+- Use ScriptableObjects for configuration data, game settings, and shared resources
+- Implement a central data management system for game state
+- Consider addressable assets for large-scale projects
+- Use PlayerPrefs for small amounts of persistent data only; implement custom serialization for complex data
+
+## UI Development
+- Always use TextMeshPro for text rendering
+- Implement responsive UI layouts using anchors and layout groups
+- Optimize UI performance by minimizing rebuild events
+- Use Unity UI Toolkit for complex interfaces (Unity 6+)
+- Implement UI Manager pattern for centralized UI state management
+
+## Performance Optimization
+
+### CPU Optimization
+- Implement object pooling for frequently instantiated/destroyed objects
+- Use Jobs System and Burst Compiler for CPU-intensive operations
+- Optimize physics by using simplified collision meshes
+- Use coroutines for time-based operations and async tasks
+- Implement custom update cycles for objects that don't need per-frame updates
+
+### Memory Management
+- Use struct types for small, short-lived value types
+- Implement proper object disposal patterns for managed resources
+- Avoid allocations in performance-critical code paths
+- Profile memory usage regularly using the Memory Profiler
+
+### Rendering Optimization
+- Optimize draw calls through batching and atlasing
+- Implement LOD (Level of Detail) systems for complex 3D models
+- Use occlusion culling for complex scenes
+- Optimize shader complexity and material count
+- Use light baking where appropriate
+
+## Error Handling and Debugging
+
+### Best Practices
+- Implement robust error handling with try-catch blocks where appropriate
+- Use Unity's Debug class (Debug.Log, Debug.LogWarning, Debug.LogError)
+- Create custom debug visualizations for game-specific data
+- Implement custom logger with severity levels and categories
+- Use assertions (Debug.Assert) to catch logical errors during development
+
+### Profiling and Optimization
+- Utilize Unity's Profiler and Frame Debugger regularly
+- Implement custom profiling markers for critical code sections
+- Monitor memory allocations and garbage collection
+- Set up performance testing for critical game systems
+- Use Unity Test Framework for unit and integration testing
+
+## Cross-Platform Considerations
+
+### Platform Compatibility
+- Use Unity's Input System for consistent input handling across platforms
+- Implement platform-specific code with preprocessor directives
+- Test on target platforms early and often
+- Consider hardware limitations for mobile and VR platforms
+- Optimize asset bundles for platform-specific delivery
+
+### Quality Settings
+- Implement scalable quality settings for different hardware capabilities
+- Use the Universal Render Pipeline (URP) for cross-platform graphics
+- Create platform-specific render pipelines when needed
+- Optimize particle systems and post-processing for lower-end devices
+- Implement dynamic resolution scaling for performance-critical applications
+
+## Unity 6 Specific Features
+- Leverage Unity 6's improved Entity Component System (ECS) for performance-critical systems
+- Use Unity 6's enhanced UI Toolkit for complex user interfaces
+- Implement Unity 6's improved asset pipeline workflows
+- Utilize Unity 6's enhanced rendering features through URP/HDRP
+- Take advantage of Unity 6's improved C# language support and .NET compatibility

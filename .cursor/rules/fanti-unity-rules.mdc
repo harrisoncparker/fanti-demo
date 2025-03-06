@@ -1,0 +1,185 @@
+---
+description: Fanti Unity Project Guidelines
+globs: *.cs, *.unity, *.prefab, *.asset
+alwaysApply: false
+---
+You are working on the Fanti project, a Unity-based flashcard/spaced repetition learning application with gamification elements. The core concept revolves around virtual pets called "Fantis" that help users learn through flashcards organized in decks.
+
+## Project Overview
+
+Fanti is a flashcard/spaced repetition learning application with gamification elements:
+- Virtual pets (Fantis) that gain experience and level up as users study
+- Flashcards organized in decks with spaced repetition scheduling
+- Gamification elements including experience points, levels, streaks, and virtual currency
+
+## Code Style and Conventions
+
+### Naming Conventions
+- **Classes/Structs/Interfaces**: `PascalCase` (e.g., `PlayerController`)
+- **Public Methods/Properties**: `PascalCase` (e.g., `GetComponent()`, `IsVisible`)
+- **Private/Protected Fields**: 
+  - Private fields use underscore prefix (_variableName)
+  - Constants: `c_ConstantName`
+  - Statics: `s_StaticName`
+- **Method Parameters**: `_parameterName`
+- **Local Variables**: `camelCase` (e.g., `temporaryVariable`)
+- **Events**: `PascalCase` with "On" prefix (e.g., `OnPlayerDeath`)
+
+### Code Organization
+- Use `#region` directives to organize code sections logically
+- Wrap editor-only code with `#if UNITY_EDITOR` ... `#endif`
+- Group related functionality in separate files when appropriate
+- Follow a consistent order for class members:
+  1. Serialized fields
+  2. Constants and private fields
+  3. Properties
+  4. Unity lifecycle methods (Awake, Start, Update, etc.)
+  5. Public methods
+  6. Private/protected methods
+  7. Editor-only methods
+
+## Project Architecture
+
+### Model-View Separation
+- Models (PlayerModel, FantiModel, DeckModel, CardModel) contain data and are serializable
+- MonoBehaviours handle Unity-specific functionality and user interactions
+- Follow the established pattern of separating data (Models) from behavior (MonoBehaviours)
+
+### Manager Classes
+- Use the Singleton pattern for manager classes (GameStateManager, SaveDataManager)
+- Ensure proper initialization in Awake() with null checks
+- Use DontDestroyOnLoad() for managers that persist across scenes
+
+### Event-Driven Communication
+- Use GameEvents for communication between components
+- Implement the Observer pattern through GameEvent and GameEventListener
+- Avoid direct references between components when possible
+
+### Component Design
+- Create small, focused components with single responsibilities
+- Use composition over inheritance for flexibility and maintainability
+- Implement interfaces to define behavior contracts
+- Utilize ScriptableObjects for data-driven design and shared resources
+
+### MonoBehaviour Usage
+- Minimize the use of Update() calls; use events or timers when possible
+- Cache component references in Awake() rather than repeatedly calling GetComponent()
+- Use TryGetComponent() to avoid null reference exceptions
+- Prefer direct references over GameObject.Find() or Transform.Find()
+- Implement object pooling for frequently instantiated objects
+
+## Game-Specific Features
+
+### Spaced Repetition System
+- Cards have easiness factor, interval, and review count
+- Algorithm adjusts intervals based on self-assessment scores
+- Follow the established pattern in CardModel.Review()
+
+### Fanti Progression
+- Fantis gain experience and level up as users study
+- Maintain streaks for consistent study
+- Implement proper calculation for level progression
+
+### Deck Management
+- Cards are organized into decks with different themes
+- Support both one-sided and double-sided cards
+- Implement proper scheduling of cards based on review dates
+
+## Performance Optimization
+
+### CPU Optimization
+- Implement object pooling for frequently instantiated/destroyed objects
+- Use coroutines for time-based operations and async tasks
+- Implement custom update cycles for objects that don't need per-frame updates
+
+### Memory Management
+- Use struct types for small, short-lived value types
+- Implement proper object disposal patterns for managed resources
+- Avoid allocations in performance-critical code paths
+
+## Example Code Structure
+
+```csharp
+using UnityEngine;
+
+public class ExampleComponent : MonoBehaviour
+{
+    #region Serialized Fields
+    [SerializeField] private Transform _container;
+    [SerializeField] private int _maxItems = 10;
+    [SerializeField] private GameObject _itemPrefab;
+    #endregion
+
+    #region Private Fields
+    private const int c_MinItems = 1;
+    private static int s_InstanceCount = 0;
+    private int m_CurrentItemCount;
+    #endregion
+
+    #region Properties
+    public int ItemCount => m_CurrentItemCount;
+    public bool CanAddMoreItems => m_CurrentItemCount < _maxItems;
+    #endregion
+
+    #region Unity Lifecycle
+    private void Awake()
+    {
+        InitializeComponent();
+        s_InstanceCount++;
+    }
+
+    private void Start()
+    {
+        SpawnInitialItems();
+    }
+
+    private void OnDestroy()
+    {
+        s_InstanceCount--;
+    }
+    #endregion
+
+    #region Public Methods
+    public void AddItem(int _count = 1)
+    {
+        int itemsToAdd = Mathf.Min(_count, _maxItems - m_CurrentItemCount);
+        
+        for (int i = 0; i < itemsToAdd; i++)
+        {
+            SpawnItem();
+        }
+        
+        m_CurrentItemCount += itemsToAdd;
+    }
+    #endregion
+
+    #region Private Methods
+    private void InitializeComponent()
+    {
+        if (_container == null)
+        {
+            _container = transform;
+            Debug.LogWarning("Container not assigned, using this transform instead.");
+        }
+        
+        m_CurrentItemCount = 0;
+    }
+    
+    private void SpawnInitialItems()
+    {
+        AddItem(c_MinItems);
+    }
+    
+    private void SpawnItem()
+    {
+        if (_itemPrefab == null)
+        {
+            Debug.LogError("Item prefab not assigned!");
+            return;
+        }
+        
+        Instantiate(_itemPrefab, _container);
+    }
+    #endregion
+}
+```

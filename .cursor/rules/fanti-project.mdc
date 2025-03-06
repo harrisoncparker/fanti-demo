@@ -1,0 +1,62 @@
+---
+description: Guidelines for working in this Project
+globs: 
+alwaysApply: true
+---
+You are working on the Fanti project, a flashcard/spaced repetition learning application with gamification elements. The core concept revolves around virtual pets called "Fantis" that help users learn through flashcards organized in decks.
+
+## Project Architecture
+
+### Model-View Separation
+- Models (PlayerModel, FantiModel, DeckModel, CardModel) contain data and are serializable
+- MonoBehaviours handle Unity-specific functionality and user interactions
+- Follow the established pattern of separating data (Models) from behavior (MonoBehaviours)
+
+### Manager Classes
+- Use the Singleton pattern for manager classes (GameStateManager, SaveDataManager)
+- Ensure proper initialization in Awake() with null checks
+- Use DontDestroyOnLoad() for managers that persist across scenes
+
+### Event-Driven Communication
+- Use GameEvents for communication between components
+- Implement the Observer pattern through GameEvent and GameEventListener
+- Avoid direct references between components when possible
+
+## Coding Patterns
+
+### Field Naming
+- Private fields use underscore prefix (_variableName)
+- Public properties use PascalCase (PropertyName)
+- Serialized fields should be grouped at the top of the class
+
+### Documentation
+- Use comments to explain complex logic
+- Document public methods with summary comments
+- Group related functionality with #region directives
+
+### Data Persistence
+- Use JSON serialization for saving player data
+- Implement proper serialization/deserialization for DateTime objects
+- Use the SaveDataManager for centralized data saving/loading
+
+## Game-Specific Features
+
+### Spaced Repetition System
+- Cards have easiness factor, interval, and review count
+- Algorithm adjusts intervals based on self-assessment scores
+- Follow the established pattern in CardModel.Review()
+
+### Fanti Progression
+- Fantis gain experience and level up as users study
+- Maintain streaks for consistent study
+- Implement proper calculation for level progression
+
+### Deck Management
+- Cards are organized into decks with different themes
+- Support both one-sided and double-sided cards
+- Implement proper scheduling of cards based on review dates
+
+## UI Implementation
+- Use TextDisplay component for text updates
+- Implement proper UI state management
+- Follow the established animation patterns using LeanTween

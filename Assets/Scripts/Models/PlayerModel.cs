@@ -24,7 +24,7 @@ public class PlayerModel : Model
     public PlayerModel(
         string userName,
         string email,
-        int gold = 0 ,
+        int gold = 120,
         List<FantiModel> fantis = null,
         List<DeckModel> decks = null
     )
