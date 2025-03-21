@@ -7,6 +7,32 @@ You are working on the Fanti project, a flashcard/spaced repetition learning app
 
 ## Project Architecture
 
+### Directory Structure
+The project's scripts are organized by their type and responsibility:
+
+```
+Assets/Scripts/
+├── Components/           # MonoBehaviour components
+│   ├── Core/            # Core game components (Fanti, Player, etc.)
+│   ├── UI/             # UI-specific components
+│   └── Events/         # Event-related components
+├── Managers/           # Singleton manager MonoBehaviours
+├── Models/            # Data models and structures
+├── ScriptableObjects/ # ScriptableObject configurations
+├── Events/           # Event definitions
+└── Utils/            # Utility classes
+```
+
+#### Component Organization
+- **Components/**: All MonoBehaviour components except managers
+  - **Core/**: Main game mechanics and entities
+  - **UI/**: User interface components
+  - **Events/**: Event listeners and triggers
+- **Managers/**: Singleton patterns for game-wide systems
+- **Models/**: Data structures and business logic
+- **Events/**: Event definitions and systems
+- **Utils/**: Helper functions and utilities
+
 ### Model-View Separation
 - Models (PlayerModel, FantiModel, DeckModel, CardModel) contain data and are serializable
 - MonoBehaviours handle Unity-specific functionality and user interactions

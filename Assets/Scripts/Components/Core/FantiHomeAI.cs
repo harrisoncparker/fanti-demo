@@ -8,7 +8,7 @@ public class FantiHomeAI : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] float _secondsBetweenDecision = 3f;
     [SerializeField] float _movementSpeed = 1f;
-    [SerializeField] float _fallAcceleration = 1.6f;
+    [SerializeField] float _fallAcceleration = 2.6f;
 
     private const float RAYCAST_HEIGHT_OFFSET = 2f;
     private const float MOVEMENT_BOUNDS_X = 3.2f;
