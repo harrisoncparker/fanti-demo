@@ -5,16 +5,21 @@ using UnityEngine.Tilemaps;
 
 public class FantiHomeAI : MonoBehaviour
 {
-    [SerializeField] Animator _animator;
+    [Header("Movement Settings")]
+    [SerializeField] float _secondsBetweenDecision = 3f;
+    [SerializeField] float _movementSpeed = 1f;
+    [SerializeField] float _fallAcceleration = 1.6f;
+
+    private const float RAYCAST_HEIGHT_OFFSET = 2f;
+    private const float MOVEMENT_BOUNDS_X = 3.2f;
     
-    float _secondsBetweenDecision = 3f;
-    float _movementSpeed = 1f;
-    Vector3 _targetPosition;
-    bool _targetPositionActive = false;
-    float boundsX = 3.2f;
-    Vector3 _raycastOrigin = Vector3.zero;
-    float _raycastOriginOffset = 2f;
-    bool _onGround = true;
+    private Vector3 _targetPosition;
+    private bool _isMovingToTarget = false;
+    private Vector3 _raycastOrigin = Vector3.zero;
+    private bool _onGround = true;
+    private float _currentFallSpeed;
+    private BoxCollider2D _collider;
+    private Animator _animator;
 
     enum State {
         MoodGood,
@@ -24,8 +29,31 @@ public class FantiHomeAI : MonoBehaviour
         Falling,
     }
 
-    State _currentMood = State.MoodNeutral;
-    State _currentState = State.MoodNeutral;
+    private State _currentMood = State.MoodNeutral;
+    private State _currentState = State.MoodNeutral;
+
+    void Awake()
+    {
+        InitializeComponents();
+    }
+
+    private void InitializeComponents()
+    {
+        _collider = GetComponent<BoxCollider2D>();
+        _animator = GetComponent<Animator>();
+        
+        if (_collider == null || _animator == null)
+        {
+            Debug.LogError("Missing required components on Fanti GameObject!");
+            enabled = false;
+            return;
+        }
+
+        // Log initial setup
+        Debug.Log($"Initial Setup - Collider Size: {_collider.size}, " +
+                 $"Offset: {_collider.offset}, " +
+                 $"Bounds: {_collider.bounds.min} to {_collider.bounds.max}");
+    }
 
     void Start()
     {
@@ -35,12 +63,45 @@ public class FantiHomeAI : MonoBehaviour
 
     void Update() 
     {
-        Debug.Log("On ground: " + _onGround);
+        UpdateRaycastOrigin();
+        CheckGround();
         UpdateState();
-        _raycastOrigin = transform.position + Vector3.up * _raycastOriginOffset;
     }
 
-    void UpdateState()
+    private void UpdateRaycastOrigin()
+    {
+        _raycastOrigin = transform.position + Vector3.up * RAYCAST_HEIGHT_OFFSET;
+    }
+
+    private void CheckGround()
+    {
+        Vector2 colliderBottom = GetColliderBottomPosition();
+        Vector2 groundPosition = FindBoundsFromPoint(colliderBottom, Vector2.down);
+        float distanceToGround = Mathf.Abs(Vector2.Distance(groundPosition, colliderBottom));
+        
+        bool wasOnGround = _onGround;
+        _onGround = distanceToGround <= 0.1f;
+        
+        if (!wasOnGround && _onGround && _currentState == State.Falling)
+        {
+            SnapToGround(groundPosition);
+        }
+    }
+
+    private Vector2 GetColliderBottomPosition()
+    {
+        return (Vector2)transform.position + _collider.offset - new Vector2(0, _collider.size.y / 2);
+    }
+
+    private void SnapToGround(Vector2 groundPosition)
+    {
+        _currentFallSpeed = 0f;
+        Vector3 position = transform.position;
+        position.y = groundPosition.y + (_collider.size.y / 2) - _collider.offset.y;
+        transform.position = position;
+    }
+
+    private void UpdateState()
     {
         switch (_currentState)
         {
@@ -54,71 +115,140 @@ public class FantiHomeAI : MonoBehaviour
                 UpdateBasedOnMood(State.MoodNeutral);
                 break;
             case State.BeingMoved:
-                Debug.Log("Being moved");
-                _animator.Play("Walking");
-                if (_onGround) {
-                    _currentState = _currentMood;
-                }
+                HandleBeingMoved();
                 break;      
             case State.Falling:
-                Debug.Log("Falling");
-                _animator.Play("Walking");
-                if (_onGround) {
-                    _currentState = _currentMood;
-                }
+                HandleFalling();
                 break;
         }
     }
 
+    private void HandleBeingMoved()
+    {
+        _animator.Play("Walking");
+        if (_onGround)
+        {
+            _currentState = _currentMood;
+        }
+    }
+
+    private void HandleFalling()
+    {
+        if (_onGround)
+        {
+            HandleLanding();
+            return;
+        }
+
+        StartFallingIfNeeded();
+        ApplyGravity();
+    }
+
+    private void HandleLanding()
+    {
+        if (_currentState != State.Falling) return;
+        
+        _currentState = _currentMood;
+        _currentFallSpeed = 0f;
+        _animator.speed = 1;
+        _animator.Play("Idle");
+    }
+
+    private void StartFallingIfNeeded()
+    {
+        if (_currentState == State.Falling) return;
+
+        _currentState = State.Falling;
+        _animator.Play("Walking");
+    }
+
+    private void ApplyGravity()
+    {
+        _currentFallSpeed += _fallAcceleration * Time.deltaTime;
+        float verticalMovement = _currentFallSpeed * Time.deltaTime;
+        transform.position += Vector3.down * verticalMovement;
+    }
+
     void UpdateBasedOnMood(State mood)
     {
-        Debug.Log("Mood: " + mood.ToString());
+        if (_currentState == State.Falling) return;
+        
         MoveToTargetPosition();
-        if (!_onGround) {
+        if (!_onGround) 
+        {
             _currentState = State.Falling;
         }
     }
 
     void MoveToTargetPosition()
     {
-        if (!_targetPositionActive) return;
+        if (!_isMovingToTarget) return;
 
-        if (Mathf.Approximately(_targetPosition.x, transform.position.x)) {
-            _targetPositionActive = false;
-        } else {
-            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _movementSpeed * Time.deltaTime);
+        if (HasReachedTargetX()) 
+        {
+            CompleteMovement();
+            return;
         }
+        
+        UpdatePosition();
     }
 
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(_raycastOrigin, 0.5f);
-        Gizmos.DrawLine(_raycastOrigin, FindBounds(Vector2.up));
-        Gizmos.DrawLine(_raycastOrigin, FindBounds(Vector2.right));
-        Gizmos.DrawLine(_raycastOrigin, FindBounds(Vector2.left));
+    private bool HasReachedTargetX()
+    {
+        return Mathf.Approximately(_targetPosition.x, transform.position.x);
+    }
 
-        var _boundsDown = FindBounds(Vector2.down);
-        float distance =  Mathf.Abs(
-                Vector2.Distance(_boundsDown, _raycastOrigin)
-            );
-        _onGround = distance <= _raycastOriginOffset;
-        if (_onGround) Gizmos.color = Color.blue;
+    private void CompleteMovement()
+    {
+        _isMovingToTarget = false;
+        ResetAnimation();
+    }
 
-        Gizmos.DrawLine(_raycastOrigin, _boundsDown);
+    private void UpdatePosition()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _movementSpeed * Time.deltaTime);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (_collider == null) _collider = GetComponent<BoxCollider2D>();
+        
+        DrawColliderBounds();
+        DrawGroundCheck();
+    }
+
+    private void DrawColliderBounds()
+    {
+        Gizmos.color = Color.cyan;
+        Vector2 colliderCenter = (Vector2)transform.position + _collider.offset;
+        Gizmos.DrawWireCube(colliderCenter, _collider.size);
+    }
+
+    private void DrawGroundCheck()
+    {
+        Vector2 colliderBottom = GetColliderBottomPosition();
+        Vector2 groundPosition = FindBoundsFromPoint(colliderBottom, Vector2.down);
+        
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(colliderBottom, 0.1f);
+        Gizmos.DrawLine(colliderBottom, groundPosition);
+        
+        Gizmos.color = _onGround ? Color.green : Color.red;
+        Gizmos.DrawWireSphere(groundPosition, 0.1f);
+    }
+
+    private Vector2 FindBoundsFromPoint(Vector2 origin, Vector2 direction)
+    {
+        var hits = Physics2D.RaycastAll(origin, direction, 10f)
+            .Where(hit => hit.collider.GetComponent<TilemapCollider2D>() != null);
+
+        var firstHit = hits.FirstOrDefault();
+        return firstHit.collider != null ? firstHit.point : origin + direction * 10f;
     }
 
     private Vector2 FindBounds(Vector2 direction)
     {
-        var hits = Physics2D.RaycastAll(_raycastOrigin, direction, 10f)
-            .Where(hit => hit.collider.GetComponent<TilemapCollider2D>() != null);
-
-        foreach (var hit in hits) {
-            Gizmos.color = Color.green;
-            return hit.point;
-        }
-
-        Gizmos.color = Color.red;
-        return (Vector2) _raycastOrigin + direction * 10f;
+        return FindBoundsFromPoint(_raycastOrigin, direction);
     }
 
     IEnumerator WaitAndChooseAction()
@@ -130,36 +260,55 @@ public class FantiHomeAI : MonoBehaviour
     IEnumerator MoveToRandom()
     {
         StopCoroutine(WaitAndChooseAction());
+        
+        SetRandomTargetPosition();
+        StartMovingAnimation();
+        
+        yield return new WaitUntil(() => !_isMovingToTarget);
+        
+        ResetAnimation();
+        StartCoroutine(WaitAndChooseAction());
+    }
 
-        // Choose a random direction (-1 or 1)
-        float direction = Random.Range(0,2)*2-1;
-        // Check if I can move at lease 1 in that direction
-        if (transform.position.x + direction > boundsX || transform.position.x + direction < -boundsX) {
-            // if not reverse direction
-            direction *= -1;
-        }
-        // Set target position to current position
+    private void SetRandomTargetPosition()
+    {
+        float direction = ChooseValidDirection();
         _targetPosition = transform.position;
-        // Choose a valid target X value
-        _targetPosition.x = Random.Range(transform.position.x + direction, boundsX * direction);
-        // activate target position
-        _targetPositionActive = true;
+        _targetPosition.x = CalculateTargetX(direction);
+        _isMovingToTarget = true;
+        UpdateSpriteDirection(direction);
+    }
 
-        // Horizonal flip if needed
+    private float ChooseValidDirection()
+    {
+        float direction = Random.Range(0, 2) * 2 - 1;
+        bool wouldExceedBounds = transform.position.x + direction > MOVEMENT_BOUNDS_X || 
+                                transform.position.x + direction < -MOVEMENT_BOUNDS_X;
+        
+        return wouldExceedBounds ? -direction : direction;
+    }
+
+    private float CalculateTargetX(float direction)
+    {
+        return Random.Range(transform.position.x + direction, MOVEMENT_BOUNDS_X * direction);
+    }
+
+    private void UpdateSpriteDirection(float direction)
+    {
         Vector3 scale = transform.localScale;
         scale.x = direction * -1;
         transform.localScale = scale;
+    }
 
-        // Play walking animation in correct direction
+    private void StartMovingAnimation()
+    {
         _animator.speed = 4;
         _animator.Play("Walking");
+    }
 
-        yield return new WaitUntil(() => !_targetPositionActive);
-
-        // Play idle animation
+    private void ResetAnimation()
+    {
         _animator.speed = 1;
         _animator.Play("Idle");
-
-        StartCoroutine(WaitAndChooseAction());
     }
 }
