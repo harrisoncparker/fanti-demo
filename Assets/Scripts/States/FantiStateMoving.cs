@@ -13,6 +13,12 @@ public class FantiStateMoving : FantiState
 
     public override void Update()
     {
+        if (!AIBehavior.IsOnGround)
+        {
+            AIBehavior.ChangeState(new FantiStateFalling());
+            return;
+        }
+
         if (HasReachedTargetX())
         {
             CompleteMovement();
@@ -67,7 +73,7 @@ public class FantiStateMoving : FantiState
         AIBehavior.transform.position = Vector3.MoveTowards(
             AIBehavior.transform.position, 
             _targetPosition, 
-            ((FantiAIBehavior)AIBehavior).MovementSpeed * Time.deltaTime
+            AIBehavior.MovementSpeed * Time.deltaTime
         );
     }
 } 

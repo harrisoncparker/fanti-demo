@@ -2,20 +2,35 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.Tilemaps;
 
-[RequireComponent(typeof(FantiPhysicsBody))]
-public class FantiGroundDetector : MonoBehaviour
+[RequireComponent(typeof(BoxCollider2D))]
+public class FallingBehavior : MonoBehaviour
 {
-    private bool _onGround = true;
-    private FantiPhysicsBody _physicsBody;
+    [SerializeField] private float _fallAcceleration = 2.6f;
+    
+    private BoxCollider2D _collider;
+    private float _currentFallSpeed;
+    private bool _isFalling;
+    private bool _isOnGround = true;
+    private const float RAYCAST_HEIGHT_OFFSET = 2f;
+
+    public bool IsOnGround => _isOnGround;
 
     private void Awake()
     {
-        _physicsBody = GetComponent<FantiPhysicsBody>();
+        _collider = GetComponent<BoxCollider2D>();
     }
 
     private void Update()
     {
         CheckGround();
+    }
+
+    private void FixedUpdate()
+    {
+        if (_isFalling)
+        {
+            ApplyGravity();
+        }
     }
 
     private void CheckGround()
@@ -24,29 +39,49 @@ public class FantiGroundDetector : MonoBehaviour
         Vector2 groundPosition = FindBoundsFromPoint(colliderBottom, Vector2.down);
         float distanceToGround = Mathf.Abs(Vector2.Distance(groundPosition, colliderBottom));
         
-        bool wasOnGround = _onGround;
-        _onGround = distanceToGround <= 0.1f;
+        bool wasOnGround = _isOnGround;
+        _isOnGround = distanceToGround <= 0.1f;
         
-        if (!wasOnGround && _onGround)
+        if (!wasOnGround && _isOnGround)
         {
             SnapToGround(groundPosition);
-            _physicsBody.StopFalling();
+            StopFalling();
         }
-        else if (!_onGround)
+        else if (!_isOnGround && !_isFalling)
         {
-            _physicsBody.StartFalling();
+            StartFalling();
         }
+    }
+
+    public void StartFalling()
+    {
+        if (_isFalling) return;
+        _isFalling = true;
+        _currentFallSpeed = 0f;
+    }
+
+    public void StopFalling()
+    {
+        _isFalling = false;
+        _currentFallSpeed = 0f;
+    }
+
+    private void ApplyGravity()
+    {
+        _currentFallSpeed += _fallAcceleration * Time.fixedDeltaTime;
+        float verticalMovement = _currentFallSpeed * Time.fixedDeltaTime;
+        transform.position += Vector3.down * verticalMovement;
     }
 
     private Vector2 GetColliderBottomPosition()
     {
-        return (Vector2)transform.position + _physicsBody.Collider.offset - new Vector2(0, _physicsBody.Collider.size.y / 2);
+        return (Vector2)transform.position + _collider.offset - new Vector2(0, _collider.size.y / 2);
     }
 
     private void SnapToGround(Vector2 groundPosition)
     {
         Vector3 position = transform.position;
-        position.y = groundPosition.y + (_physicsBody.Collider.size.y / 2) - _physicsBody.Collider.offset.y;
+        position.y = groundPosition.y + (_collider.size.y / 2) - _collider.offset.y;
         transform.position = position;
     }
 
@@ -59,11 +94,9 @@ public class FantiGroundDetector : MonoBehaviour
         return firstHit.collider != null ? firstHit.point : origin + direction * 10f;
     }
 
-    public bool IsOnGround => _onGround;
-
     private void OnDrawGizmos()
     {
-        if (_physicsBody == null || _physicsBody.Collider == null) return;
+        if (_collider == null) return;
         
         DrawColliderBounds();
         DrawGroundCheck();
@@ -72,8 +105,8 @@ public class FantiGroundDetector : MonoBehaviour
     private void DrawColliderBounds()
     {
         Gizmos.color = Color.cyan;
-        Vector2 colliderCenter = (Vector2)transform.position + _physicsBody.Collider.offset;
-        Gizmos.DrawWireCube(colliderCenter, _physicsBody.Collider.size);
+        Vector2 colliderCenter = (Vector2)transform.position + _collider.offset;
+        Gizmos.DrawWireCube(colliderCenter, _collider.size);
     }
 
     private void DrawGroundCheck()
@@ -85,7 +118,7 @@ public class FantiGroundDetector : MonoBehaviour
         Gizmos.DrawWireSphere(colliderBottom, 0.1f);
         Gizmos.DrawLine(colliderBottom, groundPosition);
         
-        Gizmos.color = _onGround ? Color.green : Color.red;
+        Gizmos.color = _isOnGround ? Color.green : Color.red;
         Gizmos.DrawWireSphere(groundPosition, 0.1f);
     }
 } 

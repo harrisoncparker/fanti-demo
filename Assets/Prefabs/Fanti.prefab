@@ -12,10 +12,8 @@ GameObject:
   - component: {fileID: 5909831404678421033}
   - component: {fileID: 4846383810818286364}
   - component: {fileID: 7864462441755935043}
-  - component: {fileID: 1085819246275016611}
-  - component: {fileID: 5688079051166644324}
-  - component: {fileID: 1106784356574568989}
   - component: {fileID: 5606376804234252020}
+  - component: {fileID: 3685036855291494033}
   - component: {fileID: 8582398680607050462}
   - component: {fileID: 3709092234379699746}
   - component: {fileID: 6150995671490572788}
@@ -114,43 +112,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _secondsBetweenDecision: 3
   _movementSpeed: 1
---- !u!114 &1085819246275016611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4219983967722445225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbea09e6f0d0a43e3b40e1f92622b22e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fallAcceleration: 2.6
---- !u!114 &5688079051166644324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4219983967722445225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e100eaa4de41848c0a2647eda8684000, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1106784356574568989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4219983967722445225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a169bc0303c84746935a5167c96cce6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5606376804234252020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +124,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e100eaa4de41848c0a2647eda8684000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3685036855291494033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4219983967722445225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c66b505eabd6e4716bb3a63f5dbc5888, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fallAcceleration: 2.6
 --- !u!114 &8582398680607050462
 MonoBehaviour:
   m_ObjectHideFlags: 0

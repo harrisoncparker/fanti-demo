@@ -17,6 +17,12 @@ public class FantiStateIdle : FantiState
 
     public override void Update()
     {
+        if (!AIBehavior.IsOnGround)
+        {
+            AIBehavior.ChangeState(new FantiStateFalling());
+            return;
+        }
+
         _timeSinceLastDecision += Time.deltaTime;
         
         if (_timeSinceLastDecision >= _secondsBetweenDecision)
