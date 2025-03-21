@@ -13,6 +13,11 @@ public class TouchEventHandler : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float _holdThreshold = 0.3f;
 
+    // @TODO: Add visual indicator (e.g. radial progress) for hold-to-drag threshold
+    // This will require:
+    // - UI prefab for the indicator
+    // - Animation/shader for progress visualization
+    // - Logic to show/hide and update progress during hold
     private bool _isPointerDown = false;
     private float _pointerDownTime = 0f;
     private bool _isHolding = false;
@@ -33,30 +38,65 @@ public class TouchEventHandler : MonoBehaviour
 
     void Update()
     {
-        if (_isPointerDown)
+        if (!_isPointerDown) return;
+
+        Vector2 currentPosition = GetCurrentPointerPosition();
+        
+        if (!IsWithinScreenBounds(currentPosition))
         {
-            Vector2 currentPosition = GetCurrentPointerPosition();
-            
-            if (!_isHolding)
+            EndHoldAndReset();
+            return;
+        }
+
+        if (!_isHolding)
+        {
+            HandlePotentialHoldStart(currentPosition);
+            return;
+        }
+
+        HandleDragUpdate(currentPosition);
+    }
+
+    private void HandlePotentialHoldStart(Vector2 position)
+    {
+        if (Time.time - _pointerDownTime < _holdThreshold) return;
+
+        if (!CheckPointerHit(position))
+        {
+            ResetTouchState();
+            return;
+        }
+
+        _isHolding = true;
+        if (_onHoldStartEvent != null)
+        {
+            _onHoldStartEvent.RaiseWithSource(gameObject);
+        }
+    }
+
+    private void HandleDragUpdate(Vector2 currentPosition)
+    {
+        if (currentPosition == _lastPointerPosition) return;
+
+        Vector2 dragDelta = currentPosition - _lastPointerPosition;
+        if (dragDelta.magnitude > 0)
+        {
+            Vector4 dragData = new Vector4(currentPosition.x, currentPosition.y, dragDelta.x, dragDelta.y);
+            if (_onDragEvent != null)
             {
-                if (Time.time - _pointerDownTime >= _holdThreshold)
-                {
-                    _isHolding = true;
-                    _onHoldStartEvent?.RaiseWithSource(gameObject);
-                }
-            }
-            else if (currentPosition != _lastPointerPosition)
-            {
-                Vector2 dragDelta = currentPosition - _lastPointerPosition;
-                if (dragDelta.magnitude > 0)
-                {
-                    // Pack both current position and delta into a Vector4
-                    Vector4 dragData = new Vector4(currentPosition.x, currentPosition.y, dragDelta.x, dragDelta.y);
-                    _onDragEvent?.Raise(gameObject, dragData);
-                }
-                _lastPointerPosition = currentPosition;
+                _onDragEvent.Raise(gameObject, dragData);
             }
         }
+        _lastPointerPosition = currentPosition;
+    }
+
+    private void EndHoldAndReset()
+    {
+        if (_onHoldEndEvent != null)
+        {
+            _onHoldEndEvent.RaiseWithSource(gameObject);
+        }
+        ResetTouchState();
     }
 
     void HandlePointerDown(Vector2 position)
@@ -78,11 +118,17 @@ public class TouchEventHandler : MonoBehaviour
             {
                 if (_isHolding)
                 {
-                    _onHoldEndEvent?.RaiseWithSource(gameObject);
+                    if (_onHoldEndEvent != null)
+                    {
+                        _onHoldEndEvent.RaiseWithSource(gameObject);
+                    }
                 }
                 else
                 {
-                    _onTapEvent?.RaiseWithSource(gameObject);
+                    if (_onTapEvent != null)
+                    {
+                        _onTapEvent.RaiseWithSource(gameObject);
+                    }
                 }
             }
             ResetTouchState();
@@ -98,7 +144,14 @@ public class TouchEventHandler : MonoBehaviour
 
     private Vector2 GetCurrentPointerPosition()
     {
-        return InputManager.Instance.TouchPositionAction?.ReadValue<Vector2>() ?? Vector2.zero;
+        var action = InputManager.Instance.TouchPositionAction;
+        return action != null ? action.ReadValue<Vector2>() : Vector2.zero;
+    }
+
+    private bool IsWithinScreenBounds(Vector2 position)
+    {
+        return position.x >= 0 && position.x <= Screen.width &&
+               position.y >= 0 && position.y <= Screen.height;
     }
 
     private bool CheckPointerHit(Vector2 position)

@@ -1,6 +1,6 @@
 ---
 description: Unity C# Development Standards
-globs: *.cs, *.unity, *.prefab, *.asset
+globs: *.cs
 alwaysApply: false
 ---
 You are an expert Unity C# developer with deep knowledge of game development best practices, performance optimization, and cross-platform considerations. These standards apply to Unity 6+ development, focusing on modern C# practices, optimized performance, and scalable architecture.
@@ -24,6 +24,120 @@ You are an expert Unity C# developer with deep knowledge of game development bes
 - **Event Fields**: underscore prefix + camelCase (e.g., `_goldUpdatedEvent`, `_managerInitializedEvent`)
 - **Model Properties**: `PascalCase` (e.g., `LastReviewDateTime`, `ScheduledCards`)
 - **Boolean Properties/Methods**: Use "Is", "Has", "Can" prefixes (e.g., `IsValid`, `CanSpawnMore`)
+
+Here's a markdown explanation of these code style preferences:
+
+# Clean Code Principles in Unity Development
+
+## Avoiding Deep Nesting
+
+### Why Avoid Nesting?
+- **Improved Readability**: Flat code is easier to scan and understand
+- **Reduced Cognitive Load**: Each level of nesting requires keeping track of another condition
+- **Better Error Prevention**: Less chance of missing a closing brace or misunderstanding scope
+
+### Techniques to Reduce Nesting
+1. **Early Returns**
+```csharp
+// Instead of this:
+void ProcessData() {
+    if (isValid) {
+        if (hasPermission) {
+            // Do work
+        }
+    }
+}
+
+// Prefer this:
+void ProcessData() {
+    if (!isValid) return;
+    if (!hasPermission) return;
+    // Do work
+}
+```
+
+2. **Extract Complex Conditions**
+```csharp
+// Instead of this:
+if (player.IsAlive && player.HasWeapon && player.AmmoCount > 0) {
+    // Do work
+}
+
+// Prefer this:
+bool CanPlayerShoot() => player.IsAlive && player.HasWeapon && player.AmmoCount > 0;
+
+if (CanPlayerShoot()) {
+    // Do work
+}
+```
+
+## Self-Documenting Code
+
+### Descriptive Function Names
+- Use verb-noun combinations that describe the action
+- Make the function's purpose immediately clear
+- Keep names concise but complete
+
+```csharp
+// Instead of:
+void Process() // Requires a comment to explain
+void h() // Cryptic abbreviation
+
+// Prefer:
+void HandlePotentialHoldStart()
+void EndHoldAndReset()
+void UpdateDragPosition()
+```
+
+### Meaningful Variable Names
+```csharp
+// Instead of:
+float t; // Needs a comment: "time since start"
+Vector2 p; // Needs a comment: "current position"
+
+// Prefer:
+float timeSinceStart;
+Vector2 currentPosition;
+```
+
+### Extract Complex Logic
+```csharp
+// Instead of this with comments:
+void Update() {
+    // Check if we can process input
+    if (isEnabled && !isPaused && hasInput) {
+        // Validate the input position
+        if (position.x >= 0 && position.x <= Screen.width &&
+            position.y >= 0 && position.y <= Screen.height) {
+            // Process the input...
+        }
+    }
+}
+
+// Prefer this:
+void Update() {
+    if (!CanProcessInput()) return;
+    if (!IsWithinScreenBounds(position)) return;
+    ProcessInput();
+}
+```
+
+## Benefits
+1. **Self-Documenting**: Code explains itself without relying on comments
+2. **Maintainability**: Easier to modify and debug
+3. **Reusability**: Well-named, focused functions can be reused
+4. **Testing**: Smaller, focused functions are easier to test
+5. **Code Reviews**: Easier for others to understand and review
+
+## When to Use Comments
+- Complex algorithms that need explanation
+- Public API documentation
+- Legal requirements or licensing
+- Temporary workarounds (with explanation and ticket reference)
+- Warning about non-obvious edge cases
+
+Remember: Comments explain *why*, code shows *how*. If you need a comment to explain *what* the code does, consider refactoring the code instead.
+
 
 ### Code Organization
 - Use `#region` directives to organize code sections logically
