@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using System.Linq;
+using UnityEngine.Tilemaps;
 
 public class FantiHomeAI : MonoBehaviour
 {
@@ -10,15 +12,71 @@ public class FantiHomeAI : MonoBehaviour
     Vector3 _targetPosition;
     bool _targetPositionActive = false;
     float boundsX = 3.2f;
+    Vector3 _raycastOrigin = Vector3.zero;
+    float _raycastOriginOffset = 2f;
+    bool _onGround = true;
+
+    enum State {
+        MoodGood,
+        MoodBad,
+        MoodNeutral,
+        BeingMoved,
+        Falling,
+    }
+
+    State _currentMood = State.MoodNeutral;
+    State _currentState = State.MoodNeutral;
 
     void Start()
     {
+        _currentState = _currentMood;
         StartCoroutine(WaitAndChooseAction());
     }
 
     void Update() 
     {
+        Debug.Log("On ground: " + _onGround);
+        UpdateState();
+        _raycastOrigin = transform.position + Vector3.up * _raycastOriginOffset;
+    }
+
+    void UpdateState()
+    {
+        switch (_currentState)
+        {
+            case State.MoodGood:
+                UpdateBasedOnMood(State.MoodGood);
+                break;
+            case State.MoodBad:
+                UpdateBasedOnMood(State.MoodBad);
+                break;
+            case State.MoodNeutral:
+                UpdateBasedOnMood(State.MoodNeutral);
+                break;
+            case State.BeingMoved:
+                Debug.Log("Being moved");
+                _animator.Play("Walking");
+                if (_onGround) {
+                    _currentState = _currentMood;
+                }
+                break;      
+            case State.Falling:
+                Debug.Log("Falling");
+                _animator.Play("Walking");
+                if (_onGround) {
+                    _currentState = _currentMood;
+                }
+                break;
+        }
+    }
+
+    void UpdateBasedOnMood(State mood)
+    {
+        Debug.Log("Mood: " + mood.ToString());
         MoveToTargetPosition();
+        if (!_onGround) {
+            _currentState = State.Falling;
+        }
     }
 
     void MoveToTargetPosition()
@@ -30,6 +88,37 @@ public class FantiHomeAI : MonoBehaviour
         } else {
             transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _movementSpeed * Time.deltaTime);
         }
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(_raycastOrigin, 0.5f);
+        Gizmos.DrawLine(_raycastOrigin, FindBounds(Vector2.up));
+        Gizmos.DrawLine(_raycastOrigin, FindBounds(Vector2.right));
+        Gizmos.DrawLine(_raycastOrigin, FindBounds(Vector2.left));
+
+        var _boundsDown = FindBounds(Vector2.down);
+        float distance =  Mathf.Abs(
+                Vector2.Distance(_boundsDown, _raycastOrigin)
+            );
+        _onGround = distance <= _raycastOriginOffset;
+        if (_onGround) Gizmos.color = Color.blue;
+
+        Gizmos.DrawLine(_raycastOrigin, _boundsDown);
+    }
+
+    private Vector2 FindBounds(Vector2 direction)
+    {
+        var hits = Physics2D.RaycastAll(_raycastOrigin, direction, 10f)
+            .Where(hit => hit.collider.GetComponent<TilemapCollider2D>() != null);
+
+        foreach (var hit in hits) {
+            Gizmos.color = Color.green;
+            return hit.point;
+        }
+
+        Gizmos.color = Color.red;
+        return (Vector2) _raycastOrigin + direction * 10f;
     }
 
     IEnumerator WaitAndChooseAction()
