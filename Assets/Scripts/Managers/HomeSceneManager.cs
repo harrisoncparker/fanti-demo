@@ -47,7 +47,7 @@ public class HomeSceneManager : MonoBehaviour
             Vector2 spawnPosition = spawnPoint.transform.position + new Vector3(Random.Range(-3.0f, 3.0f),0,0);
 
             Fanti newFanti = Instantiate(_fantiPrefab, spawnPosition, spawnPoint.transform.rotation);
-            newFanti.Model = model;
+            newFanti.Initialize(model);
 
             newFanti.transform.SetParent(spawnPoint.transform);
         }

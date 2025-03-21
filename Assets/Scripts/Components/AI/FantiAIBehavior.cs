@@ -40,7 +40,7 @@ public class FantiAIBehavior : MonoBehaviour
 
     private void Start()
     {
-        ChangeState(new FantiStateIdle(_secondsBetweenDecision));
+        ChangeToMoodState();
     }
 
     private void Update()
@@ -55,6 +55,41 @@ public class FantiAIBehavior : MonoBehaviour
         _currentState = newState;
         _currentState.Initialize(_fanti, this);
         _currentState.Enter();
+    }
+
+    public void ChangeToMoodState()
+    {
+        if (_fanti == null)
+        {
+            Debug.LogError("[FantiAIBehavior] Cannot change mood state: _fanti is null!");
+            return;
+        }
+
+        if (_fanti.Model == null)
+        {
+            Debug.LogError("[FantiAIBehavior] Cannot change mood state: _fanti.Model is null!");
+            return;
+        }
+
+        Debug.LogError($"[FantiAIBehavior] Changing to mood state. Current mood: {_fanti.Model.Mood}");
+        
+        switch (_fanti.Model.Mood)
+        {
+            case FantiMood.Happy:
+                Debug.LogError("[FantiAIBehavior] Transitioning to Happy state");
+                ChangeState(new FantiStateHappy(_secondsBetweenDecision));
+                break;
+            case FantiMood.Sad:
+                Debug.LogError("[FantiAIBehavior] Transitioning to Sad state");
+                ChangeState(new FantiStateSad(_secondsBetweenDecision));
+                break;
+            default:
+                Debug.LogError("[FantiAIBehavior] Transitioning to Neutral state");
+                ChangeState(new FantiStateNeutral(_secondsBetweenDecision));
+                break;
+        }
+        
+        Debug.LogError($"[FantiAIBehavior] Mood state change completed. New state: {_currentState?.GetType().Name}");
     }
 
     private void OnDrawGizmos()
@@ -81,7 +116,9 @@ public class FantiAIBehavior : MonoBehaviour
 
         return _currentState switch
         {
-            FantiStateIdle _ => Color.green,
+            FantiStateHappy _ => new Color(0f, 0.8f, 0f),     // Brighter green for happy
+            FantiStateNeutral _ => new Color(0f, 0.6f, 0.6f), // Teal for neutral
+            FantiStateSad _ => new Color(0.7f, 0f, 0f),       // Darker red for sad
             FantiStateMoving _ => Color.blue,
             FantiStateFalling _ => Color.red,
             _ => Color.black

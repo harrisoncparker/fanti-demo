@@ -1,5 +1,12 @@
 using System.Collections.Generic;
 
+public enum FantiMood
+{
+    Happy,
+    Neutral,
+    Sad
+}
+
 [System.Serializable]
 public class FantiModel : Model
 {
@@ -9,6 +16,21 @@ public class FantiModel : Model
     public List<string> deckIds;
     public int exp;
     public int streak;
+
+    public FantiMood Mood
+    {
+        get
+        {
+            // TODO: Calculate mood based on various factors like:
+            // - Time since last play session
+            // - Study streak
+            // - Experience gain rate
+            // - Deck completion rates
+            // - Interaction frequency
+            // For now, default to neutral
+            return FantiMood.Neutral;
+        }
+    }
 
     public int Level
     {

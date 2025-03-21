@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class FantiStateIdle : FantiState
+public class FantiStateHappy : FantiState
 {
     private float _timeSinceLastDecision = 0f;
     private float _secondsBetweenDecision;
 
-    public FantiStateIdle(float secondsBetweenDecision)
+    public FantiStateHappy(float secondsBetweenDecision)
     {
         _secondsBetweenDecision = secondsBetweenDecision;
     }
@@ -13,6 +13,7 @@ public class FantiStateIdle : FantiState
     public override void Enter()
     {
         _timeSinceLastDecision = 0f;
+        AIBehavior.GetComponent<FantiAnimationController>().PlayIdle();
     }
 
     public override void Update()
@@ -34,11 +35,10 @@ public class FantiStateIdle : FantiState
 
     private void DecideNextAction()
     {
-        // 80% chance to move, 20% chance to stay idle
-        if (Random.value < 0.8f)
+        // Happy Fantis are more likely to move around (90% chance)
+        if (Random.value < 0.9f)
         {
-            var movingState = new FantiStateMoving();
-            AIBehavior.ChangeState(movingState);
+            AIBehavior.ChangeState(new FantiStateMoving());
         }
     }
 } 

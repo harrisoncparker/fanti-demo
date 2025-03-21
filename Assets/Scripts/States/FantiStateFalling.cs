@@ -24,18 +24,37 @@ public class FantiStateFalling : FantiState
 
     public override void Update()
     {
+        if (_fallingBehavior == null)
+        {
+            Debug.LogError("[FantiStateFalling] _fallingBehavior is null!");
+            return;
+        }
+
         if (_fallingBehavior.IsOnGround)
         {
+            Debug.LogError($"[FantiStateFalling] Detected ground contact, handling landing...");
             HandleLanding();
         }
     }
 
     private void HandleLanding()
     {
+        if (_animationController == null)
+        {
+            Debug.LogError("[FantiStateFalling] _animationController is null!");
+            return;
+        }
+
+        if (AIBehavior == null)
+        {
+            Debug.LogError("[FantiStateFalling] AIBehavior is null!");
+            return;
+        }
+
+        Debug.LogError($"[FantiStateFalling] Playing idle animation and changing to mood state...");
         _animationController.PlayIdle();
-        
-        // Transition back to idle state (will be mood state later)
-        AIBehavior.ChangeState(new FantiStateIdle(3f));
+        AIBehavior.ChangeToMoodState();
+        Debug.LogError($"[FantiStateFalling] State change completed.");
     }
 
     public override void Exit()

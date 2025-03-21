@@ -2,7 +2,20 @@ using UnityEngine;
 
 public class Fanti : MonoBehaviour
 {
-    public FantiModel Model { get; set; }
+    public FantiModel Model { get; private set; }
+
+    private void Awake()
+    {
+        if (Model == null)
+        {
+            // Create a default model if none exists
+            Model = new FantiModel(
+                name: gameObject.name,
+                colour: ColourName.Pink
+            );
+            Debug.Log($"[Fanti] Created default model for {gameObject.name}");
+        }
+    }
 
     public void Initialize(FantiModel model)
     {

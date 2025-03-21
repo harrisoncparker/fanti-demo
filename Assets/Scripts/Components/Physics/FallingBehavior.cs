@@ -44,11 +44,13 @@ public class FallingBehavior : MonoBehaviour
         
         if (!wasOnGround && _isOnGround)
         {
+            Debug.LogError($"[FallingBehavior] Ground contact detected! Distance: {distanceToGround}");
             SnapToGround(groundPosition);
             StopFalling();
         }
         else if (!_isOnGround && !_isFalling)
         {
+            Debug.LogError("[FallingBehavior] Lost ground contact, starting to fall");
             StartFalling();
         }
     }

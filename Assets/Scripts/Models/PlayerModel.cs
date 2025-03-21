@@ -66,8 +66,8 @@ public class PlayerModel : Model
             "test@gmail.com",
             0,
             new() { 
-                fantalita, 
-                hugo
+                // fantalita, 
+                // hugo
             },
             new() { 
                 fakeDeckDoubleSided,

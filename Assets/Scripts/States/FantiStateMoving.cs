@@ -65,7 +65,7 @@ public class FantiStateMoving : FantiState
     private void CompleteMovement()
     {
         AIBehavior.GetComponent<FantiAnimationController>().PlayIdle();
-        AIBehavior.ChangeState(new FantiStateIdle(3f));
+        AIBehavior.ChangeToMoodState();
     }
 
     private void UpdatePosition()
