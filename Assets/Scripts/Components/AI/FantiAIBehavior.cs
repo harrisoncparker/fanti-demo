@@ -51,7 +51,6 @@ public class FantiAIBehavior : MonoBehaviour
     public void ChangeState(FantiState newState)
     {
         _currentState?.Exit();
-
         _currentState = newState;
         _currentState.Initialize(_fanti, this);
         _currentState.Enter();
@@ -59,37 +58,41 @@ public class FantiAIBehavior : MonoBehaviour
 
     public void ChangeToMoodState()
     {
-        if (_fanti == null)
-        {
-            Debug.LogError("[FantiAIBehavior] Cannot change mood state: _fanti is null!");
-            return;
-        }
+        if (_fanti == null || _fanti.Model == null) return;
 
-        if (_fanti.Model == null)
-        {
-            Debug.LogError("[FantiAIBehavior] Cannot change mood state: _fanti.Model is null!");
-            return;
-        }
-
-        Debug.LogError($"[FantiAIBehavior] Changing to mood state. Current mood: {_fanti.Model.Mood}");
-        
         switch (_fanti.Model.Mood)
         {
             case FantiMood.Happy:
-                Debug.LogError("[FantiAIBehavior] Transitioning to Happy state");
                 ChangeState(new FantiStateHappy(_secondsBetweenDecision));
                 break;
             case FantiMood.Sad:
-                Debug.LogError("[FantiAIBehavior] Transitioning to Sad state");
                 ChangeState(new FantiStateSad(_secondsBetweenDecision));
                 break;
             default:
-                Debug.LogError("[FantiAIBehavior] Transitioning to Neutral state");
                 ChangeState(new FantiStateNeutral(_secondsBetweenDecision));
                 break;
         }
-        
-        Debug.LogError($"[FantiAIBehavior] Mood state change completed. New state: {_currentState?.GetType().Name}");
+    }
+
+    // Event handlers for touch interactions
+    public void OnHoldStart()
+    {
+        ChangeState(new FantiStateDragging());
+    }
+
+    public void OnHoldEnd()
+    {
+        if (_currentState is FantiStateDragging)
+        {
+            if (!IsOnGround)
+            {
+                ChangeState(new FantiStateFalling());
+            }
+            else
+            {
+                ChangeToMoodState();
+            }
+        }
     }
 
     private void OnDrawGizmos()
@@ -121,6 +124,7 @@ public class FantiAIBehavior : MonoBehaviour
             FantiStateSad _ => new Color(0.7f, 0f, 0f),       // Darker red for sad
             FantiStateMoving _ => Color.blue,
             FantiStateFalling _ => Color.red,
+            FantiStateDragging _ => Color.yellow,             // Yellow for dragging
             _ => Color.black
         };
     }

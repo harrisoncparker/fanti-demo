@@ -20,6 +20,14 @@ public class GameEvent : ScriptableObject
             listener.OnEventRaised(source);
     }
 
+    public void Raise(GameObject source, object data)
+    {
+        if (!source) Debug.LogWarning("GameEvent.source not set");
+
+        foreach (GameEventListener listener in listeners) 
+            listener.OnEventRaised(source, data);
+    }
+
     public void RegisterListener(GameEventListener listener)
     {
         if(!listeners.Contains(listener))

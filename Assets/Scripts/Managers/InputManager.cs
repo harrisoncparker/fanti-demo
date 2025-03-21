@@ -18,6 +18,7 @@ public class InputManager : MonoBehaviour
 
     PlayerInput _playerInput;
     InputAction _touchAction;
+    public InputAction TouchPositionAction => _touchPositionAction;
     InputAction _touchPositionAction;
     Vector2 _lastPointerPositon;
 

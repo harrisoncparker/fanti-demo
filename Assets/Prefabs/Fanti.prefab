@@ -15,9 +15,11 @@ GameObject:
   - component: {fileID: 5606376804234252020}
   - component: {fileID: 3685036855291494033}
   - component: {fileID: 8582398680607050462}
-  - component: {fileID: 3709092234379699746}
+  - component: {fileID: 6204304181266768324}
+  - component: {fileID: 3281246861377003471}
   - component: {fileID: 6150995671490572788}
   - component: {fileID: 5223394174974556663}
+  - component: {fileID: 596141841603167253}
   m_Layer: 8
   m_Name: Fanti
   m_TagString: Untagged
@@ -112,6 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _secondsBetweenDecision: 3
   _movementSpeed: 1
+  _showDebug: 1
 --- !u!114 &5606376804234252020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,8 +169,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _dataResponse:
+    m_PersistentCalls:
+      m_Calls: []
   _eventSource: {fileID: 4219983967722445225}
---- !u!114 &3709092234379699746
+--- !u!114 &6204304181266768324
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,10 +182,47 @@ MonoBehaviour:
   m_GameObject: {fileID: 4219983967722445225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5ce2798813c3459299720527c9efdcb, type: 3}
+  m_Script: {fileID: 11500000, guid: 8253f15c823484adab3f754d9e91a364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onPointerUpEvent: {fileID: 11400000, guid: 76fee941c5066447e81dd489deaf77a8, type: 2}
+  _gameEvents:
+  - {fileID: 11400000, guid: b4fe9d516912346bdaae1f67334070ca, type: 2}
+  _response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7864462441755935043}
+        m_TargetAssemblyTypeName: FantiAIBehavior, Assembly-CSharp
+        m_MethodName: OnHoldStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _dataResponse:
+    m_PersistentCalls:
+      m_Calls: []
+  _eventSource: {fileID: 0}
+--- !u!114 &3281246861377003471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4219983967722445225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd5fdf4b6f7e4a10902f83ac9e7e48c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onTapEvent: {fileID: 11400000, guid: 76fee941c5066447e81dd489deaf77a8, type: 2}
+  _onHoldStartEvent: {fileID: 11400000, guid: b4fe9d516912346bdaae1f67334070ca, type: 2}
+  _onDragEvent: {fileID: 11400000, guid: fd2b5b04b78ca41a881bc3ef5f584c20, type: 2}
+  _onHoldEndEvent: {fileID: 11400000, guid: 5f51c8afd3966415c951bb4303d6a98d, type: 2}
+  _holdThreshold: 0.3
 --- !u!212 &6150995671490572788
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -257,3 +300,36 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &596141841603167253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4219983967722445225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8253f15c823484adab3f754d9e91a364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameEvents:
+  - {fileID: 11400000, guid: 5f51c8afd3966415c951bb4303d6a98d, type: 2}
+  _response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7864462441755935043}
+        m_TargetAssemblyTypeName: FantiAIBehavior, Assembly-CSharp
+        m_MethodName: OnHoldEnd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _dataResponse:
+    m_PersistentCalls:
+      m_Calls: []
+  _eventSource: {fileID: 0}
