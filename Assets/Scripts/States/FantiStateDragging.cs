@@ -5,7 +5,6 @@ public class FantiStateDragging : FantiState
     private Camera _mainCamera;
     private Vector2 _offset;
     private bool _isDragging = false;
-    private Vector2 _lastPosition;
     private Vector3 _targetPosition;
     private Vector2 _currentInputPosition;
 
@@ -21,7 +20,6 @@ public class FantiStateDragging : FantiState
 
         _isDragging = true;
         _currentInputPosition = InputManager.Instance.TouchPositionAction.ReadValue<Vector2>();
-        _lastPosition = _currentInputPosition;
         
         // Calculate initial offset
         Vector2 pointerWorldPos = _mainCamera.ScreenToWorldPoint(_currentInputPosition);

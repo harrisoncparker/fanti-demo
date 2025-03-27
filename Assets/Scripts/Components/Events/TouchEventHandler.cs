@@ -7,7 +7,6 @@ public class TouchEventHandler : MonoBehaviour
     [Header("Events")]
     [SerializeField] private GameEvent _onTapEvent;
     [SerializeField] private GameEvent _onHoldStartEvent;
-    [SerializeField] private GameEvent _onDragEvent;
     [SerializeField] private GameEvent _onHoldEndEvent;
 
     [Header("Settings")]
@@ -21,8 +20,6 @@ public class TouchEventHandler : MonoBehaviour
     private bool _isPointerDown = false;
     private float _pointerDownTime = 0f;
     private bool _isHolding = false;
-    private Vector2 _pointerStartPosition;
-    private Vector2 _lastPointerPosition;
 
     void OnEnable()
     {
@@ -53,8 +50,6 @@ public class TouchEventHandler : MonoBehaviour
             HandlePotentialHoldStart(currentPosition);
             return;
         }
-
-        HandleDragUpdate(currentPosition);
     }
 
     private void HandlePotentialHoldStart(Vector2 position)
@@ -74,22 +69,6 @@ public class TouchEventHandler : MonoBehaviour
         }
     }
 
-    private void HandleDragUpdate(Vector2 currentPosition)
-    {
-        if (currentPosition == _lastPointerPosition) return;
-
-        Vector2 dragDelta = currentPosition - _lastPointerPosition;
-        if (dragDelta.magnitude > 0)
-        {
-            Vector4 dragData = new Vector4(currentPosition.x, currentPosition.y, dragDelta.x, dragDelta.y);
-            if (_onDragEvent != null)
-            {
-                _onDragEvent.Raise(gameObject, dragData);
-            }
-        }
-        _lastPointerPosition = currentPosition;
-    }
-
     private void EndHoldAndReset()
     {
         if (_onHoldEndEvent != null)
@@ -105,34 +84,25 @@ public class TouchEventHandler : MonoBehaviour
         {
             _isPointerDown = true;
             _pointerDownTime = Time.time;
-            _pointerStartPosition = position;
-            _lastPointerPosition = position;
         }
     }
 
     void HandlePointerUp(Vector2 position)
     {
-        if (_isPointerDown)
+         if (!_isPointerDown) return;
+
+        if (!CheckPointerHit(position)) return;
+
+        if (_isHolding && _onHoldEndEvent != null)
         {
-            if (CheckPointerHit(position))
-            {
-                if (_isHolding)
-                {
-                    if (_onHoldEndEvent != null)
-                    {
-                        _onHoldEndEvent.RaiseWithSource(gameObject);
-                    }
-                }
-                else
-                {
-                    if (_onTapEvent != null)
-                    {
-                        _onTapEvent.RaiseWithSource(gameObject);
-                    }
-                }
-            }
-            ResetTouchState();
+            _onHoldEndEvent.RaiseWithSource(gameObject);
         }
+        else if (_onTapEvent != null)
+        {
+            _onTapEvent.RaiseWithSource(gameObject);
+        }
+
+        ResetTouchState();
     }
 
     private void ResetTouchState()

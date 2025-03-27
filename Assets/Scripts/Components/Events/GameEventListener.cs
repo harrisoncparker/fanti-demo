@@ -12,6 +12,15 @@ public class GameEventListener : MonoBehaviour
     // on writing this it was only used for clicking on Fantis
     // It may end up being used for furniture
 
+    // public GameEvent[] GameEvents { get { return _gameEvents; } private set; }
+
+    public GameEvent[] GameEvents {
+        get {
+            return _gameEvents;
+        }
+        private set {}
+    }
+
     void OnEnable() 
     {
         foreach (GameEvent gameEvent in _gameEvents)
@@ -38,5 +47,26 @@ public class GameEventListener : MonoBehaviour
     {
         _eventSource = source;
         _dataResponse?.Invoke(data);
+    }
+
+    public static GameObject FindEventSourceInListeners(string eventName, GameEventListener[] eventListeners)
+    {
+        GameObject eventSource = null;
+
+        foreach (GameEventListener eventListener in eventListeners)
+        {
+            foreach (GameEvent gameEvent in eventListener.GameEvents)
+            {
+                if(eventName == gameEvent.name) {
+                    eventSource = eventListener._eventSource;
+                }
+            }
+        }
+
+         if (eventSource == null) {
+            Debug.LogError(eventName + " is not called by this objects listeners.");
+        }
+
+        return eventSource;
     }
 }

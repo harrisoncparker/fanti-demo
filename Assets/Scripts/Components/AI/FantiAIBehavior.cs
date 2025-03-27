@@ -77,22 +77,33 @@ public class FantiAIBehavior : MonoBehaviour
     // Event handlers for touch interactions
     public void OnHoldStart()
     {
+        GameObject eventSource = GameEventListener.FindEventSourceInListeners(
+            "HomeFantiHoldStart", 
+            GetComponents<GameEventListener>()
+        );
+
+        if (this != eventSource.GetComponent<FantiAIBehavior>()) return;
+
         ChangeState(new FantiStateDragging());
     }
 
     public void OnHoldEnd()
     {
-        if (_currentState is FantiStateDragging)
-        {
-            if (!IsOnGround)
-            {
-                ChangeState(new FantiStateFalling());
-            }
-            else
-            {
-                ChangeToMoodState();
-            }
+        GameObject eventSource = GameEventListener.FindEventSourceInListeners(
+            "HomeFantiHoldEnd", 
+            GetComponents<GameEventListener>()
+        );
+
+        if (this != eventSource.GetComponent<FantiAIBehavior>()) return;
+
+        if (_currentState is not FantiStateDragging) return;
+
+        if (!IsOnGround) {
+            ChangeState(new FantiStateFalling());
+            return;
         }
+
+        ChangeToMoodState();
     }
 
     private void OnDrawGizmos()

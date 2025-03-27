@@ -25,11 +25,10 @@ public class Fanti : MonoBehaviour
 
     public void SelectFanti()
     {
-        GameObject eventSource = GetComponent<GameEventListener>()._eventSource;
-
-        if (!eventSource) {
-            Debug.LogError("No event source set");
-        }
+        GameObject eventSource = GameEventListener.FindEventSourceInListeners(
+            "HomeFantiClicked", 
+            GetComponents<GameEventListener>()
+        );
 
         if (this != eventSource.GetComponent<Fanti>()) return;
 
