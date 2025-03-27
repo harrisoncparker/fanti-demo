@@ -25,6 +25,8 @@ public class Fanti : MonoBehaviour
 
     public void SelectFanti()
     {
+        // @TODO this is bad practice as is requires the called function to know which event called it
+        // Eventually we need to find a better solution for this
         GameObject eventSource = GameEventListener.FindEventSourceInListeners(
             "HomeFantiClicked", 
             GetComponents<GameEventListener>()
