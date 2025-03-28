@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 870ce9860007c46d78315f4f1bf3e9b8
+guid: 3d72b81f4339a42418c8b7e31daa4240
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -71,33 +71,33 @@ ScriptedImporter:
     textureFormatSet: 0
     applyGammaDecoding: 0
   previousAsepriteImporterSettings:
-    fileImportMode: 0
+    fileImportMode: 1
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
-    mosaicPadding: 0
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
   asepriteImporterSettings:
-    fileImportMode: 0
+    fileImportMode: 1
     importHiddenLayers: 0
     layerImportMode: 1
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
-    mosaicPadding: 0
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638720310042530820
+  platformSettingsDirtyTick: 638786970491695540
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -122,19 +122,19 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: menu-bg
+  - name: Dialogue Container Dark
     originalName: 
     pivot: {x: 0.5, y: 0}
     alignment: 9
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 11, y: 8, z: 12, w: 9}
     customData: 
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 48
-      height: 48
-    spriteID: 9448cd217538a49819869f612f6bebb0
+      width: 138
+      height: 42
+    spriteID: 5b753320bf55f4801b5b35e958996e95
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -143,20 +143,19 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
-  spriteSheetImportData:
-  - name: menu-bg
+  - name: Dialogue Container Light
     originalName: 
     pivot: {x: 0.5, y: 0}
     alignment: 9
-    border: {x: 9, y: 9, z: 9, w: 9}
+    border: {x: 11, y: 8, z: 12, w: 9}
     customData: 
     rect:
       serializedVersion: 2
-      x: 0
-      y: 0
-      width: 48
-      height: 48
-    spriteID: 9448cd217538a49819869f612f6bebb0
+      x: 4
+      y: 54
+      width: 138
+      height: 42
+    spriteID: ddf2337f526f845dd84e3677264118b5
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -164,24 +163,34 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 0, y: 0}
+    uvTransform: {x: 4, y: 54}
+  spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -344851469
-    name: menu-bg
+    guid: 1091266470
+    name: Dialogue 138 x 42
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: menu-bg
+    - name: Frame_0
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
-        width: 48
-        height: 48
-      spriteId: 9448cd217538a49819869f612f6bebb0
+        width: 138
+        height: 42
+      spriteId: 5b753320bf55f4801b5b35e958996e95
+    - name: Frame_1
+      frameIndex: 1
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 138
+        height: 42
+      spriteId: ddf2337f526f845dd84e3677264118b5
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -260,4 +269,4 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 48, y: 48}
+  canvasSize: {x: 138, y: 42}

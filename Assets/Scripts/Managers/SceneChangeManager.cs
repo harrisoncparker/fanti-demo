@@ -52,6 +52,12 @@ public class SceneChangeManager : MonoBehaviour
         LoadScene("Shelter");
     }
 
+    public void LoadFurnitureShopScene()
+    {
+        LoadScene("Furniture Shop");
+    }
+
+
     public void LoadTownScene()
     {
         // @TODO Implement town scene
