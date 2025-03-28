@@ -5,7 +5,6 @@ public class GameEventListener : MonoBehaviour
 {
     [SerializeField] GameEvent[] _gameEvents;
     [SerializeField] UnityEvent _response;
-    [SerializeField] UnityEvent<object> _dataResponse;
 
     public GameObject _eventSource; 
     // @TODO reconsider the way _eventSource is being used
@@ -41,12 +40,6 @@ public class GameEventListener : MonoBehaviour
     {
         _eventSource = source;
         _response.Invoke();
-    }
-
-    public void OnEventRaised(GameObject source, object data)
-    {
-        _eventSource = source;
-        _dataResponse?.Invoke(data);
     }
 
     public static GameObject FindEventSourceInListeners(string eventName, GameEventListener[] eventListeners)

@@ -6,15 +6,12 @@ public class Fanti : MonoBehaviour
 
     private void Awake()
     {
-        if (Model == null)
-        {
-            // Create a default model if none exists
-            Model = new FantiModel(
-                name: gameObject.name,
-                colour: ColourName.Pink
-            );
-            Debug.Log($"[Fanti] Created default model for {gameObject.name}");
-        }
+        if (Model != null) return;
+        
+        Model = new FantiModel(
+            name: gameObject.name,
+            colour: ColourName.Pink
+        );
     }
 
     public void Initialize(FantiModel model)
