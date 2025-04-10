@@ -9,7 +9,8 @@ public class Player : MonoBehaviour
     public int EarnGoldForCards(int cardsPlayed)
     {
         int goldToEarn = cardsPlayed * 10;
-        Model.gold += goldToEarn;
+        int randomBonus = Random.Range(0, goldToEarn);
+        Model.gold += goldToEarn + randomBonus;
         _goldUpdatedEvent.Raise();
         return goldToEarn;
     }
