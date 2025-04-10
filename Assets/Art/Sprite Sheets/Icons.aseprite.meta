@@ -1761,7 +1761,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 148, y: 4}
   spriteSheetImportData:
-  - name: ChevronDown
+  - name: chevron-down
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -1782,7 +1782,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
-  - name: Bullet
+  - name: bullet
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -1803,7 +1803,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
-  - name: BulletHighlight
+  - name: bullet-highlight
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -2013,7 +2013,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
-  - name: Frog
+  - name: frog
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -2034,7 +2034,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
-  - name: Owl
+  - name: owl
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -2055,7 +2055,7 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
-  - name: Coin Gold
+  - name: coin-gold
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -2110,6 +2110,90 @@ ScriptedImporter:
       width: 16
       height: 16
     spriteID: 494f8fae82b0b46d7975213ba2ede07c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: pickaxe
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 28
+      y: 52
+      width: 16
+      height: 16
+    spriteID: 9f82bf1b4311d497baee376fa00f9320
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: paint-roller
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 28
+      y: 4
+      width: 16
+      height: 16
+    spriteID: 605118b62cb4f4c0e876c24800d0885e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: door-and-window
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 52
+      y: 52
+      width: 16
+      height: 16
+    spriteID: 0488b819479a14a56a7e130ab0b8d5be
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  - name: chest
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 52
+      y: 4
+      width: 16
+      height: 16
+    spriteID: e03617872816444a8b2b87ea9d947dac
     spriteBone: []
     spriteOutline: []
     vertices: []

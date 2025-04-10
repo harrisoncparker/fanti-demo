@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 143145764a1174af78bfcc01aed1831c, type: 3}
+  m_Name: Large Leaf Plant
+  m_EditorClassIdentifier: 
+  _sprite: {fileID: 8941499511871257418, guid: 1fedb79fe11f645a4a0deeacc264c5c6, type: 3}
+  _price: 230
+  _category: {fileID: 11400000, guid: dab9f8dcf27874fada47a572787a39cb, type: 2}
+  _sortingLayer: 2
+  _useGravity: 1

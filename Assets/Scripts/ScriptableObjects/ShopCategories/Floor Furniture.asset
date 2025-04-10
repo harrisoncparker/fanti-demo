@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c84d8aa06cc9b47d09b7afd42d8cb52c, type: 3}
+  m_Name: Floor Furniture
+  m_EditorClassIdentifier: 
+  _icon: {fileID: -896578256510649954, guid: 291c4c756e03a431d87c5c5dfd6aa207, type: 3}

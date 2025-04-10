@@ -47,6 +47,7 @@ public class FantiMenu : MonoBehaviour
 
     void UpdateButtons(FantiModel fanti)
     {
+        // check if button exists
         _playButton.gameObject.SetActive(fanti.deckIds.Count >= 1);
         _playButton.interactable = fanti.ScheduledCards.Count >= 1;
         
