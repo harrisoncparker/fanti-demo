@@ -45,6 +45,28 @@ public class Player : MonoBehaviour
         return Model.gold >= cost;
     }
 
+    public bool PurchaseItem(ShopItemData item)
+    {
+        ValidateModel();
+
+        if (item == null)
+        {
+            Debug.LogError("Cannot purchase null item.");
+            return false;
+        }
+
+        if (!CanAfford(item.Price))
+        {
+            Debug.LogWarning($"Cannot afford {item.name} for {item.Price} gold.");
+            return false;
+        }
+
+        Model.gold -= item.Price;
+        AddToInventory(item);
+        _goldUpdatedEvent.Raise();
+        return true;
+    }
+
     public void AddToInventory(ShopItemData item, int amount = 1)
     {
         ValidateModel();
@@ -99,12 +121,6 @@ public class Player : MonoBehaviour
     public int GetItemQuantity(ShopItemData item)
     {
         ValidateModel();
-        Debug.Log("item");
-        Debug.Log(item);
-        Debug.Log("item.Id");
-        Debug.Log(item.Id);
-        Debug.Log("Model");
-        Debug.Log(Model);
         return Model.inventory.GetQuantity(item.Id);
     }
 

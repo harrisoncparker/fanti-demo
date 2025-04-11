@@ -47,17 +47,15 @@ public class ShopItem : MonoBehaviour
     public void OnPurchaseButtonClicked()
     {
         Player currentPlayer = GameStateManager.Instance.CurrentPlayer;
-
         if (_itemData == null || currentPlayer == null) return;
 
-        if (!currentPlayer.CanAfford(_itemData.Price))
+        if (currentPlayer.PurchaseItem(_itemData))
+        {
+            UpdateDisplay();
+        }
+        else
         {
             // TODO: Show insufficient funds feedback
-            return;
         }
-
-        // Purchase the item
-        currentPlayer.AddToInventory(_itemData);
-        UpdateDisplay();
     }
 }
