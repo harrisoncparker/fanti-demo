@@ -1,0 +1,87 @@
+---
+description: When working with git and version control
+globs: 
+alwaysApply: false
+---
+# Git Commit Message Conventions
+
+## Format
+```
+<system> - <description>
+```
+
+## Systems
+- `furniture shop`: Furniture shop related features
+- `player`: Player-related features and systems
+- `home`: Home scene and related features
+- `fanti`: Fanti character related changes
+- `cards`: Card and deck system
+- `ui`: User interface changes
+- `editor`: Unity Editor customizations
+- `core`: Core game systems and utilities
+
+## Maintaining Systems
+When adding a new major system to the project:
+1. Add the system name to the Systems list in this file
+2. Include a brief description of what the system covers
+3. Use the format: `system_name`: Brief description
+4. Commit the rules update with: `core - update commit style rules with new system`
+
+## Description Style
+- Use lowercase
+- Be concise but descriptive
+- For fixes, prefix with "fix:"
+- For cleanup, prefix with "cleanup:"
+
+## Examples
+
+Basic changes:
+```
+furniture shop - add new item category
+player - implement gold earning system
+home - add fanti movement system
+fanti - update animation states
+```
+
+Fixes:
+```
+home - fix: make sure only one fanti is picked up at a time
+cards - fix: prevent duplicate card creation
+ui - fix: shop item alignment
+```
+
+Cleanup/Refactoring:
+```
+fanti - code cleanup
+core - cleanup: remove unused variables
+editor - cleanup: improve validation messages
+```
+
+## Guidelines
+
+1. System name
+   - Use lowercase
+   - Use existing system names when possible
+   - Be consistent with naming
+
+2. Description
+   - Be clear and concise
+   - Use present tense ("add" not "added")
+   - No period at the end
+   - Maximum 72 characters total
+
+3. Special prefixes
+   - `fix:` for bug fixes
+   - `cleanup:` for code cleanup
+   - `setup:` for initial system setup
+
+## Examples from Project History
+
+```
+furniture shop - can purchace items
+furniture shop - track items in inventory in save data
+furniture shop - setup basic UI and shop items
+player - add random bonus when earning gold for cards played
+home - fix: make sure only one fanti is picked up at a time
+fanti - code cleanup
+```
