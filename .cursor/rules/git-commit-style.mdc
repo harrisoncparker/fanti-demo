@@ -1,7 +1,7 @@
 ---
-description: When working with git and version control
+description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 # Git Commit Message Conventions
 
@@ -19,6 +19,7 @@ alwaysApply: false
 - `ui`: User interface changes
 - `editor`: Unity Editor customizations
 - `core`: Core game systems and utilities
+- `task`: Task tracking and project management
 
 ## Maintaining Systems
 When adding a new major system to the project:
