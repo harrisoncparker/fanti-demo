@@ -45,7 +45,8 @@ public class SaveDataManager : MonoBehaviour
     public void LoadData()
     {
         GameStateManager.Instance.CurrentPlayer.Model = LocalSaveSystem.LoadData();
-        Instance._saveDataLoadedEvent.Raise();
+        _saveDataLoadedEvent.Raise();
+        EventManager.Instance.Save.TriggerSaveDataLoaded();
     }
 }
 

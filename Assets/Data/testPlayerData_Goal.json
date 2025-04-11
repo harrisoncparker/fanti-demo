@@ -60,5 +60,17 @@
             "name": "Wizard Hat",
             "sprite_path": "/Art/Wearables/Hats/wizard_hat.aseprite"
         }
-    ]
+    ],
+    "inventory": {
+        "items": [
+            {
+                "itemId": "red-berry-bush",
+                "quantity": 1
+            },
+            {
+                "itemId": "bright-grass-plant",
+                "quantity": 1
+            }
+        ]
+    }
 }

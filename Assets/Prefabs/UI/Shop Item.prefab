@@ -901,6 +901,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemImage: {fileID: 8538204137563031129}
   _priceText: {fileID: 8169286209168946779}
+  _quantityText: {fileID: 2584591496450342646}
   _itemData: {fileID: 0}
 --- !u!1 &8648593686068128055
 GameObject:

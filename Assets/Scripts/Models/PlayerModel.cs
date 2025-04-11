@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class PlayerModel : Model
@@ -8,6 +9,7 @@ public class PlayerModel : Model
     public int gold;
     public List<FantiModel> fantis;
     public List<DeckModel> decks;
+    public InventoryModel inventory;
 
     public List<CardModel> ScheduledCards
     {
@@ -26,7 +28,8 @@ public class PlayerModel : Model
         string email,
         int gold = 120,
         List<FantiModel> fantis = null,
-        List<DeckModel> decks = null
+        List<DeckModel> decks = null,
+        InventoryModel inventory = null
     )
     {
         this.userName = userName;
@@ -34,15 +37,14 @@ public class PlayerModel : Model
         this.gold = gold;
         this.fantis = fantis ?? new List<FantiModel>();
         this.decks = decks ?? new List<DeckModel>();
+        this.inventory = inventory ?? new InventoryModel();
     }
 
     public static PlayerModel Fake()
     {
         // Fake Decks
         DeckModel fakeDeckDoubleSided = DeckModel.FakeDoubleSided();
-
         DeckModel fakeDeckOneSided = DeckModel.FakeOneSided();
-
         DeckModel fakeDeckMixedSided = DeckModel.FakeMixedSided();
 
         // Fake Fantis
@@ -60,20 +62,31 @@ public class PlayerModel : Model
             fakeDeckMixedSided.id
         };
 
+        // Fake Inventory
+        var inventory = new InventoryModel();
+        
+        // Try to find and add furniture items if they exist
+        var furniture = Resources.FindObjectsOfTypeAll<FurnitureData>();
+        if (furniture != null && furniture.Length > 0)
+        {
+            foreach (var item in furniture[..2])  // Take first two items using range
+            {
+                inventory.AddItem(item.Id, 1);
+            }
+        }
+        
         // Fake Player
         PlayerModel fakePlayer = new(
             "Harrison",
             "test@gmail.com",
             0,
-            new() { 
-                fantalita, 
-                hugo
-            },
+            new() { fantalita, hugo },
             new() { 
                 fakeDeckDoubleSided,
                 fakeDeckOneSided,
                 fakeDeckMixedSided
-            }
+            },
+            inventory
         );
 
         return fakePlayer;

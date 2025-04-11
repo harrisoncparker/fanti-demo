@@ -4,25 +4,60 @@ using UnityEngine.UI;
 public class ShopItem : MonoBehaviour
 {
     [Header("Display Elements")]
-    [SerializeField] Image _itemImage;
-    [SerializeField] TextDisplay _priceText;
+    [SerializeField] private Image _itemImage;
+    [SerializeField] private TextDisplay _priceText;
+    [SerializeField] private TextDisplay _quantityText;
 
-    [Header("Data")]
-    [SerializeField] ShopItemData _itemData;
+    [Header("References")]
+    [SerializeField] private ShopItemData _itemData;
 
-    void Start()
+    private void OnEnable()
     {
-        if (_itemData != null)
+        EventManager.Instance.Save.OnSaveDataLoaded += UpdateDisplay;
+        EventManager.Instance.Player.OnInventoryUpdated += UpdateDisplay;
+    }
+
+    private void OnDisable()
+    {
+        if (EventManager.Instance != null)
         {
-            LoadItemData(_itemData);
+            EventManager.Instance.Save.OnSaveDataLoaded -= UpdateDisplay;
+            EventManager.Instance.Player.OnInventoryUpdated -= UpdateDisplay;
         }
     }
 
     public void LoadItemData(ShopItemData itemData)
     {
         _itemData = itemData;
-        _itemImage.sprite = itemData.ShopSprite;
+        UpdateDisplay();
+    }
+
+    private void UpdateDisplay()
+    {
+        if (_itemData == null) return;
+
+        Player currentPlayer = GameStateManager.Instance.CurrentPlayer;
+
+        _itemImage.sprite = _itemData.ShopSprite;
         _itemImage.SetNativeSize();
-        _priceText.UpdateText(itemData.Price.ToString());
+        _priceText.UpdateText(_itemData.Price.ToString());
+        _quantityText.UpdateText(currentPlayer.GetItemQuantity(_itemData).ToString());
+    }
+
+    public void OnPurchaseButtonClicked()
+    {
+        Player currentPlayer = GameStateManager.Instance.CurrentPlayer;
+
+        if (_itemData == null || currentPlayer == null) return;
+
+        if (!currentPlayer.CanAfford(_itemData.Price))
+        {
+            // TODO: Show insufficient funds feedback
+            return;
+        }
+
+        // Purchase the item
+        currentPlayer.AddToInventory(_itemData);
+        UpdateDisplay();
     }
 }
