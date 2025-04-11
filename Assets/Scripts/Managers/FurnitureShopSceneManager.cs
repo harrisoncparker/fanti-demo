@@ -2,14 +2,22 @@ using UnityEngine;
 
 public class FurnitureShopSceneManager : MonoBehaviour
 {
+    [Header("Configuration")]
+    [SerializeField] private DialogueData _initialDialogue;
 
     void Start()
     {
-        Debug.Log("Loaded Furniture Shop Scene");
+        if (_initialDialogue == null)
+        {
+            Debug.LogError("Initial dialogue not set in FurnitureShopSceneManager");
+            return;
+        }
+
+        EventManager.Instance.Dialogue.TriggerDialogueRequested(_initialDialogue);
     }
 
-    void Oestroy()
+    void OnDestroy()
     {
-        Debug.Log("Furniture Shop Scene Unloaded");
+        EventManager.Instance.Dialogue.TriggerDialogueCloseRequested();
     }
 }

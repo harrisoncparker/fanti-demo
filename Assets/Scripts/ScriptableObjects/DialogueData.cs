@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Dialogue", menuName = "Fanti/Dialogue/Dialogue Data")]
+[CreateAssetMenu(fileName = "New Dialogue", menuName = "Configuration/Dialogue Data")]
 public class DialogueData : ScriptableObject
 {
     [System.Serializable]
@@ -16,7 +16,7 @@ public class DialogueData : ScriptableObject
     {
         public string choiceText;
         public DialogueData nextDialogue;
-        public VisibilityToggler menuToOpen;
+        public GameEvent eventToFire;
     }
 
     public DialogueLine[] lines;

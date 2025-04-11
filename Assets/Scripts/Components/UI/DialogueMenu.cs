@@ -1,28 +1,42 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(VisibilityToggler))]
 public class DialogueMenu : MonoBehaviour
 {
-    [Header("Text Displays")]
+    [Header("Displays")]
     [SerializeField] private TextDisplay _speakerTextDisplay;
-    [SerializeField] private Button _choiceButtonPrefab;
-    
-    [Header("Containers")]
-    [SerializeField] private VisibilityToggler _dialogueContainer;
-    [SerializeField] private TextDisplay _speakerBox;
-    [SerializeField] private DialogueChoiceDisplay _choicesBox;
+    [SerializeField] private DialogueChoiceDisplay _choicesDisplay;
+
+    [Header("Prefabs")]
+    [SerializeField] private ChoiceButton _choiceButtonPrefab;
 
     private DialogueData _currentDialogue;
     private int _currentLineIndex;
+    private VisibilityToggler _visibilityToggler;
+
+    private void Awake()
+    {
+        _visibilityToggler = GetComponent<VisibilityToggler>();
+    }
 
     private void OnEnable()
     {
-        EventManager.Instance.Dialogue.OnDialogueRequested += HandleDialogueRequested;
+        StartCoroutine(Utilities.WaitForManagerThen<EventManager>(manager => {
+            manager.Dialogue.OnDialogueRequested += HandleDialogueRequested;
+            manager.Dialogue.OnDialogueCloseRequested += Close;
+            manager.Dialogue.OnDialogueOpenRequested += Open;
+        }));
     }
 
     private void OnDisable()
     {
-        EventManager.Instance.Dialogue.OnDialogueRequested -= HandleDialogueRequested;
+        if (EventManager.Instance != null)
+        {
+            EventManager.Instance.Dialogue.OnDialogueRequested -= HandleDialogueRequested;
+            EventManager.Instance.Dialogue.OnDialogueCloseRequested -= Close;
+            EventManager.Instance.Dialogue.OnDialogueOpenRequested -= Open;
+        }
     }
 
     private void HandleDialogueRequested(DialogueData dialogue)
@@ -30,7 +44,7 @@ public class DialogueMenu : MonoBehaviour
         StartCoroutine(Utilities.WaitForAFrameThen(() => {
             _currentDialogue = dialogue;
             _currentLineIndex = 0;
-            _dialogueContainer.Open();
+            _visibilityToggler.Open();
             DisplayCurrentLine();
         }));
     }
@@ -42,36 +56,39 @@ public class DialogueMenu : MonoBehaviour
         SetupChoices(line.choices);
     }
 
-    private void SetupChoices(DialogueChoice[] choices)
+    private void SetupChoices(DialogueData.DialogueChoice[] choices)
     {
-        _choicesBox.ClearChoices();
+        _choicesDisplay.ClearChoices();
         
         foreach (var choice in choices)
         {
             var choiceButton = Instantiate(_choiceButtonPrefab);
-            var textDisplay = choiceButton.GetComponent<TextDisplay>();
-            
-            textDisplay.UpdateText(choice.choiceText);
+            choiceButton.UpdateChoiceText(choice.choiceText);
             choiceButton.onClick.AddListener(() => HandleChoice(choice));
             
-            _choicesBox.AddChoice(choiceButton);
+            _choicesDisplay.AddChoice(choiceButton);
         }
     }
 
-    private void HandleChoice(DialogueChoice choice)
+    private void HandleChoice(DialogueData.DialogueChoice choice)
     {
-        if (choice.menuToOpen != null)
-            choice.menuToOpen.Open();
-
+        if (choice.eventToFire != null)
+            choice.eventToFire.Raise();
+        
         if (choice.nextDialogue != null)
             EventManager.Instance.Dialogue.TriggerDialogueRequested(choice.nextDialogue);
-        else
+        else 
             Close();
     }
 
     private void Close()
     {
-        _dialogueContainer.Close();
+        _visibilityToggler.Close();
         EventManager.Instance.Dialogue.TriggerDialogueClosed();
+    }
+
+    private void Open()
+    {
+        _visibilityToggler.Open();
     }
 } 

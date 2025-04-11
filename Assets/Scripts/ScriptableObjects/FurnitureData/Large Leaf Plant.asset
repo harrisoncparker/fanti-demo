@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Large Leaf Plant
   m_EditorClassIdentifier: 
   _sprite: {fileID: 8941499511871257418, guid: 1fedb79fe11f645a4a0deeacc264c5c6, type: 3}
-  _price: 230
+  _price: 150
   _category: {fileID: 11400000, guid: dab9f8dcf27874fada47a572787a39cb, type: 2}
   _sortingLayer: 2
   _useGravity: 1

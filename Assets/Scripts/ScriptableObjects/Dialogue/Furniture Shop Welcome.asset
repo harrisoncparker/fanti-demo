@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad9176400b614428b94bc141ddb264e9, type: 3}
+  m_Name: Furniture Shop Welcome
+  m_EditorClassIdentifier: 
+  lines:
+  - text: Hey Dude. Wanna buy some furniture?
+    choices:
+    - choiceText: Yep
+      nextDialogue: {fileID: 0}
+      eventToFire: {fileID: 11400000, guid: ae94e71c35fb64fbaa917853fbfe2aef, type: 2}
+    - choiceText: No, Bye!
+      nextDialogue: {fileID: 0}
+      eventToFire: {fileID: 0}
+    - choiceText: Nice Cat!
+      nextDialogue: {fileID: 0}
+      eventToFire: {fileID: 0}

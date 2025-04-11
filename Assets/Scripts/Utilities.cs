@@ -10,6 +10,19 @@ class Utilities
         yield return new WaitForEndOfFrame();
         callback();
     }
+
+    public static IEnumerator WaitForManagerThen<T>(Action<T> callback) where T : MonoBehaviour
+    {
+        T manager = null;
+        while (manager == null)
+        {
+            // Use reflection to get the Instance property
+            var property = typeof(T).GetProperty("Instance");
+            manager = property?.GetValue(null) as T;
+            yield return new WaitForSeconds(0.1f);
+        }
+        callback(manager);
+    }
 }
 
 public static class StringUtilities

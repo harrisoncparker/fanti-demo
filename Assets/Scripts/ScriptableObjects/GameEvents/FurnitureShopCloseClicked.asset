@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa1e02821c0da47a1a783337013893b4, type: 3}
-  m_Name: OpenFurnitureShopClicked
+  m_Name: FurnitureShopCloseClicked
   m_EditorClassIdentifier: 
   listeners: []
