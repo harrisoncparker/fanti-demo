@@ -1,0 +1,126 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+ # Task Tracking Standards
+
+## Overview
+This document defines the standard structure for tracking tasks in the project using JSON files. Each feature or major component should have its own task file following these conventions.
+
+## Directory Structure
+```
+.cursor/
+├── tasks/          # Task tracking JSON files
+│   └── *.todo.json # Task list files
+└── rules/          # Project rules and standards
+```
+
+## Task File Naming
+- Use kebab-case: `feature-name.todo.json`
+- Always include `.todo.json` suffix
+- Name should be descriptive of the feature
+
+## Status Emojis
+Task Status:
+- ✅ "completed" - Task is done and verified
+- 🔄 "in_progress" - Currently being worked on
+- 🚧 "todo" - Not yet started
+- ❌ "blocked" - Cannot proceed due to dependencies
+
+Task Type:
+- 💻 Code Task - Involves writing or modifying code
+- 🎮 Editor Task - Requires Unity Editor configuration
+- 📦 Asset Task - Involves creating or modifying assets
+- 🧪 Test Task - Testing or verification related
+
+When combining status and type, always put status first:
+- ✅💻 Completed code task
+- 🔄🎮 In-progress editor task
+- 🚧📦 Todo asset task
+- ❌🧪 Blocked test task
+
+## Editor Task Guidelines
+When presenting editor tasks, the AI assistant should:
+
+1. Present Clear Steps:
+   ```
+   Step 1: [Action in Editor]
+   Location: [Exact location in Editor]
+   Settings: [Specific values/configuration]
+   ```
+
+2. Wait for Confirmation:
+   - After each major editor step
+   - Before proceeding to dependent tasks
+   - When configuration needs verification
+
+3. Provide Visual References:
+   - Describe expected visual state
+   - Mention specific UI elements
+   - Reference Unity documentation when helpful
+
+4. Example Editor Task Format:
+   ```
+   🎮 Creating a Dialogue Asset
+   
+   Step 1: Create Dialogue Asset
+   Location: Project Window > Right Click > Create > Fanti > Dialogue
+   Name: "Shop_Greeting"
+   
+   Step 2: Configure Lines
+   - Select the asset in Project Window
+   - In Inspector:
+     • Size: 1
+     • Element 0:
+       - Text: "Welcome to the shop!"
+       - Choices: 2
+   
+   Would you like me to proceed with the next step?
+   ```
+
+## JSON Schema
+```json
+{
+    "title": "string",          // Feature/component name
+    "description": "string",    // Brief description
+    "created": "ISO date",      // Creation date
+    "updated": "ISO date",      // Last update date
+    "status": "string",         // Overall status
+    "sections": [               // Logical groupings
+        {
+            "title": "string",  // Section name
+            "status": "string", // Section status
+            "tasks": [          // Individual tasks
+                {
+                    "title": "string",
+                    "status": "string",
+                    "description": "string",  // Optional
+                    "code_context": {         // Optional
+                        "file": "string",
+                        "details": "string"
+                    },
+                    "editor_context": {       // Optional
+                        "location": "string",
+                        "settings": "string"
+                    }
+                }
+            ]
+        }
+    ]
+}
+```
+
+## Best Practices
+1. Keep tasks atomic and specific
+2. Update status and timestamps regularly
+3. Include relevant context for implementation
+4. Group related tasks into logical sections
+5. Use consistent terminology
+6. Always use emoji prefixes for clarity
+7. Follow editor task format for Unity configuration
+
+## Example
+See `.cursor/tasks/dialogue-system.todo.json` for a reference implementation of these standards.
+
+
