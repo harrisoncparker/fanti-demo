@@ -241,3 +241,27 @@ Remember: Comments explain *why*, code shows *how*. If you need a comment to exp
 - Implement Unity 6's improved asset pipeline workflows
 - Utilize Unity 6's enhanced rendering features through URP/HDRP
 - Take advantage of Unity 6's improved C# language support and .NET compatibility
+
+# Unity Development Standards
+
+## Namespace Conventions
+- Do NOT use namespaces in this project
+- All classes should be in the global namespace
+- If you see namespace-related linting errors:
+  1. Stop current implementation
+  2. Ask user to reload Unity Editor
+  3. Continue after confirmation
+
+## Code Organization
+- One class per file
+- File name must match class name
+- Keep classes focused and single-purpose
+- Follow existing patterns in the codebase
+
+## MonoBehaviour Components
+- Use [SerializeField] for inspector-visible private fields
+- Follow existing naming conventions:
+  - Private fields: _camelCase with underscore prefix
+  - Public properties: PascalCase
+  - Methods: PascalCase
+  

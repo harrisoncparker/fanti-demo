@@ -6,6 +6,7 @@ public class EventManager : MonoBehaviour
     
     public PlayerEventManager Player { get; private set; }
     public SaveEventManager Save { get; private set; }
+    public DialogueEventManager Dialogue { get; private set; }
     
     private void Awake()
     {
@@ -25,5 +26,6 @@ public class EventManager : MonoBehaviour
     {
         Player = gameObject.AddComponent<PlayerEventManager>();
         Save = gameObject.AddComponent<SaveEventManager>();
+        Dialogue = gameObject.AddComponent<DialogueEventManager>();
     }
 } 
