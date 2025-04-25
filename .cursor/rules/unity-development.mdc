@@ -264,4 +264,3 @@ Remember: Comments explain *why*, code shows *how*. If you need a comment to exp
   - Private fields: _camelCase with underscore prefix
   - Public properties: PascalCase
   - Methods: PascalCase
-  

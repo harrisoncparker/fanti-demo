@@ -27,8 +27,8 @@ public class Player : MonoBehaviour
         ValidateModel();
         
         int goldToEarn = cardsPlayed * 10;
-        int randomBonus = Random.Range(0, goldToEarn);
-        Model.gold += goldToEarn + randomBonus;
+        goldToEarn += Random.Range(0, goldToEarn);
+        Model.gold += goldToEarn;
         _goldUpdatedEvent.Raise();
         return goldToEarn;
     }
