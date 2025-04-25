@@ -15,13 +15,13 @@ public class MainMenuPanel : MonoBehaviour
         _closedPositionY = _rectTransform.anchoredPosition.y;
     }
 
-    void OpenPanel()
+    public void OpenPanel()
     {
         LeanTween.moveY(_rectTransform, 0, _animationSeconds);
         _isPanelOpen = true;
     }
 
-    void ClosePanel()
+    public void ClosePanel()
     {
         LeanTween.moveY(_rectTransform, _closedPositionY, _animationSeconds);
         _isPanelOpen = false;

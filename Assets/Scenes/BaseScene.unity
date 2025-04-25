@@ -2457,6 +2457,7 @@ GameObject:
   - component: {fileID: 397395170}
   - component: {fileID: 397395169}
   - component: {fileID: 397395168}
+  - component: {fileID: 397395172}
   m_Layer: 20
   m_Name: Main Menu Panel
   m_TagString: Untagged
@@ -2497,13 +2498,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameEvents:
-  - {fileID: 11400000, guid: d77690fa77ca24a3d83c5adf3f01c5ba, type: 2}
+  - {fileID: 11400000, guid: 68304e62ef51e434ca1345be63d6c0b8, type: 2}
   _response:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 397395169}
         m_TargetAssemblyTypeName: MainMenuPanel, Assembly-CSharp
-        m_MethodName: TogglePanelState
+        m_MethodName: OpenPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2565,6 +2566,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 397395166}
   m_CullTransparentMesh: 1
+--- !u!114 &397395172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397395166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8253f15c823484adab3f754d9e91a364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameEvents:
+  - {fileID: 11400000, guid: e58ea50b8905e42b08d9a8ed312ede67, type: 2}
+  _response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 397395169}
+        m_TargetAssemblyTypeName: MainMenuPanel, Assembly-CSharp
+        m_MethodName: ClosePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _eventSource: {fileID: 0}
 --- !u!224 &409760605 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4548981524841246169, guid: aee24532a28ca4b32825ca7ee6111204, type: 3}
@@ -13118,6 +13149,8 @@ GameObject:
   - component: {fileID: 2027016467}
   - component: {fileID: 2027016466}
   - component: {fileID: 2027016465}
+  - component: {fileID: 2027016470}
+  - component: {fileID: 2027016469}
   m_Layer: 20
   m_Name: Burger Button
   m_TagString: Untagged
@@ -13134,8 +13167,8 @@ RectTransform:
   m_GameObject: {fileID: 2027016463}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9999668, y: 0.9999668, z: 0.9999668}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 982169709}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13202,9 +13235,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: d77690fa77ca24a3d83c5adf3f01c5ba, type: 2}
-        m_TargetAssemblyTypeName: GameEvent, Assembly-CSharp
-        m_MethodName: Raise
+      - m_Target: {fileID: 2027016465}
+        m_TargetAssemblyTypeName: BurgerButton, Assembly-CSharp
+        m_MethodName: ToggleIcon
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13214,9 +13247,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2027016465}
-        m_TargetAssemblyTypeName: BurgerButton, Assembly-CSharp
-        m_MethodName: ToggleIcon
+      - m_Target: {fileID: 397395169}
+        m_TargetAssemblyTypeName: MainMenuPanel, Assembly-CSharp
+        m_MethodName: TogglePanelState
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13264,6 +13297,66 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2027016463}
   m_CullTransparentMesh: 1
+--- !u!114 &2027016469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027016463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8253f15c823484adab3f754d9e91a364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameEvents:
+  - {fileID: 11400000, guid: 68304e62ef51e434ca1345be63d6c0b8, type: 2}
+  _response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2027016465}
+        m_TargetAssemblyTypeName: BurgerButton, Assembly-CSharp
+        m_MethodName: SetIconOpen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _eventSource: {fileID: 0}
+--- !u!114 &2027016470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027016463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8253f15c823484adab3f754d9e91a364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameEvents:
+  - {fileID: 11400000, guid: e58ea50b8905e42b08d9a8ed312ede67, type: 2}
+  _response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2027016465}
+        m_TargetAssemblyTypeName: BurgerButton, Assembly-CSharp
+        m_MethodName: SetIconClosed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _eventSource: {fileID: 0}
 --- !u!1 &2036131539
 GameObject:
   m_ObjectHideFlags: 0
